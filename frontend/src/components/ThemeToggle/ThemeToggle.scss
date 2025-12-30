@@ -1,0 +1,41 @@
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    p {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-muted);
+        cursor: pointer;
+        user-select: none;
+
+        &.active {
+            color: var(--accent-color);
+        }
+    }
+
+    .toggle-pill {
+        width: 44px;
+        height: 24px;
+        background: #1d2939;
+        border: 1px solid #334166;
+        border-radius: 12px;
+        padding: 2px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+
+        .circle {
+            width: 18px;
+            height: 18px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            transition: transform 0.25s ease-in-out;
+
+            &.dark {
+                transform: translateX(20px);
+            }
+        }
+    }
+}

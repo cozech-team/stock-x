@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+/* =========================
+   THEME VARIABLES
+========================= */
+
+/* Default theme → Dark */
+:root {
+    /* background */
+    --primary-bg: linear-gradient(180deg, #0f1d2a 0%, #0a0f20 100%);
+    --auth-style-bg: #0a2184;
+    --input-bg: #080c20;
+
+    /* colors */
+    --primary-color: #ffffff;
+    --primary-lighter-color: #fffefc;
+    --secondary-color: #050f3d;
+    --ternary-color: #233a5b;
+    --accent-color: #c94b4b;
+    --text-muted: #79869f;
+    --border-color: #334166;
+    --input-color: #4d557d;
+
+    /* heading */
+    --heading-xs-font-size: 24px;
+    --heading-xs-font-weight: 600;
+    --heading-xs-line-height: 32px;
+
+    --heading-sm-font-size: 30px;
+    --heading-sm-font-weight: 600;
+    --heading-sm-line-height: 38px;
+
+    /* text */
+    --text-sm-font-size: 14px;
+    --text-sm-line-height: 20px;
+
+    --text-md-font-size: 16px;
+    --text-md-line-height: 24px;
+
+    /* spacing */
+    --spacing-sm: 4px;
+    --spacing-md: 8px;
+    --spacing-lg: 12px;
+    --spacing-xl: 16px;
+    --spacing-2xl: 20px;
+    --spacing-3xl: 24px;
+    --spacing-4xl: 28px;
+    --spacing-5xl: 32px;
+    --spacing-6xl: 36px;
+}
+
+/* =========================
+   LIGHT THEME
+========================= */
+
+[data-theme="light"] {
+    /* background */
+    --primary-bg: radial-gradient(circle, #004bbb, #06428e, #133095);
+    --input-bg: #ffffff1a;
+    --auth-style-bg: #38abbf;
+
+    /* colors */
+    --input-color: #a4c3ff;
+    --primary-color: #ffffff;
+    --primary-lighter-color: #fffefc;
+    --secondary-color: #050f3d;
+    --ternary-color: #2652aa;
+    --accent-color: #c9a44c;
+    --text-muted: #a4c3ff;
+    --border-color: #a4c3ff;
+}
+
+/* =========================
+   BASE STYLES
+========================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--primary-bg);
+    color: var(--primary-color);
+    font-family: inherit;
+}
