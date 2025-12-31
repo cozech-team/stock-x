@@ -7,7 +7,16 @@ const ThemeToggle = () => {
     const [theme, setTheme] = useState("dark");
 
     useEffect(() => {
+        // Add transitioning class to document
+        document.documentElement.classList.add("theme-transitioning");
         document.documentElement.setAttribute("data-theme", theme);
+
+        // Remove transitioning class after transition completes
+        const timeout = setTimeout(() => {
+            document.documentElement.classList.remove("theme-transitioning");
+        }, 500);
+
+        return () => clearTimeout(timeout);
     }, [theme]);
 
     const toggleTheme = () => {

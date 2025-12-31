@@ -1,4 +1,4 @@
-#sign-in {
+#sign-up {
     position: relative;
     background: var(--primary-bg);
     overflow: hidden;
@@ -43,6 +43,7 @@
                 }
             }
             .form-container {
+                padding: 20% 0 10%;
                 .content-wrapper {
                     max-width: 380px;
                     padding: 10px;
@@ -65,8 +66,13 @@
                         border-radius: 12px;
                         .item-1 {
                             .social-button-groups {
+                                display: flex;
+                                flex-direction: row;
+                                gap: 12px;
+
                                 .google-btn,
                                 .apple-btn {
+                                    flex: 1;
                                     border-radius: 10px;
                                     border: 1px solid #6e82d7;
                                     padding: 10px 16px;
@@ -84,6 +90,11 @@
                                         line-height: var(--text-md-line-height);
                                         user-select: none;
                                         transition: color 0.3s ease;
+                                    }
+
+                                    // Hide text on large screens (above 1024px)
+                                    .btn-text {
+                                        display: none;
                                     }
 
                                     img {
@@ -137,7 +148,7 @@
                                         line-height: var(--text-sm-line-height);
                                         color: var(--primary-lighter-color);
                                         span {
-                                            color: #7f56d9;
+                                            color: var(--accent-color-2);
                                         }
                                     }
                                     a {
@@ -197,9 +208,182 @@
                                         }
                                     }
                                     input[type="password"],
-                                    input[type="email"] {
+                                    input[type="email"],
+                                    input[type="tel"] {
                                         padding-left: 14px;
                                         padding-right: 42px;
+                                    }
+                                }
+
+                                // Phone Input Styles
+                                .phone-input-wrapper {
+                                    position: relative;
+                                    width: 100%;
+
+                                    .react-international-phone-input-container {
+                                        display: flex;
+                                        align-items: center;
+                                        width: 100%;
+                                        border-radius: 10px;
+                                        border: 1px solid var(--border-color);
+                                        background: var(--input-bg);
+                                        box-shadow: 0px 1px 2px rgba(10, 13, 18, 0.05);
+                                        transition: border-color 0.2s ease;
+
+                                        &:focus-within {
+                                            border: 1px solid var(--accent-color);
+                                        }
+
+                                        .react-international-phone-country-selector-button {
+                                            border: none;
+                                            background: transparent;
+                                            padding: 10px 8px 10px 14px;
+                                            cursor: pointer;
+                                            transition: opacity 0.2s;
+                                            display: flex;
+                                            align-items: center;
+                                            gap: 4px;
+
+                                            &:hover {
+                                                opacity: 0.8;
+                                                background: transparent;
+                                            }
+                                        }
+
+                                        .react-international-phone-input {
+                                            flex: 1;
+                                            border: none;
+                                            outline: none;
+                                            background: transparent;
+                                            padding: 10px 14px;
+                                            color: var(--input-color);
+                                            caret-color: var(--accent-color);
+                                            font-size: var(--text-md-font-size);
+                                            font-weight: 400;
+                                            line-height: var(--text-md-line-height);
+                                            width: 100%;
+
+                                            &::placeholder {
+                                                color: var(--input-color);
+                                                opacity: 0.7;
+                                            }
+
+                                            &:focus {
+                                                color: var(--accent-color);
+                                            }
+                                        }
+                                    }
+
+                                    // Country selector dropdown
+                                    .react-international-phone-country-selector-dropdown {
+                                        position: absolute;
+                                        display: block;
+                                        background: var(--input-bg);
+                                        border: 1px solid var(--border-color);
+                                        border-radius: 10px;
+                                        box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.25);
+                                        max-height: 240px;
+                                        overflow-y: auto;
+                                        overflow-x: hidden;
+                                        margin-top: 8px;
+                                        z-index: 10000;
+                                        width: auto;
+                                        min-width: 300px;
+                                        left: 0;
+                                        top: calc(100% + 4px);
+                                        padding: 4px;
+
+                                        // Custom scrollbar
+                                        &::-webkit-scrollbar {
+                                            width: 6px;
+                                        }
+
+                                        &::-webkit-scrollbar-track {
+                                            background: transparent;
+                                        }
+
+                                        &::-webkit-scrollbar-thumb {
+                                            background: var(--ternary-color);
+                                            border-radius: 3px;
+
+                                            &:hover {
+                                                background: var(--border-color);
+                                            }
+                                        }
+
+                                        .react-international-phone-country-selector-dropdown__list-item {
+                                            padding: 10px 12px;
+                                            cursor: pointer;
+                                            color: var(--input-color);
+                                            transition: all 0.2s ease;
+                                            display: flex;
+                                            align-items: center;
+                                            white-space: nowrap;
+                                            border-radius: 6px;
+                                            margin-bottom: 2px;
+
+                                            &:hover {
+                                                transform: translateX(2px);
+                                            }
+
+                                            &:active {
+                                                transform: scale(0.98);
+                                            }
+
+                                            .react-international-phone-country-selector-dropdown__list-item-flag-emoji {
+                                                font-size: 20px;
+                                                margin-right: 10px;
+                                                flex-shrink: 0;
+                                            }
+
+                                            .react-international-phone-country-selector-dropdown__list-item-country-name {
+                                                color: var(--primary-color);
+                                                flex: 1;
+                                                font-size: 14px;
+                                                font-weight: 500;
+                                            }
+
+                                            .react-international-phone-country-selector-dropdown__list-item-dial-code {
+                                                color: var(--accent-color);
+                                                padding-left: 16px;
+                                                font-size: 13px;
+                                                font-weight: 600;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            .password-requirements {
+                                .requirement {
+                                    color: var(--input-color);
+                                    font-size: 12px;
+                                    font-weight: 400;
+                                    line-height: 1.5;
+                                    position: relative;
+                                    padding-left: 16px;
+                                    opacity: 0.6;
+                                    transition: all 0.3s ease;
+
+                                    &::before {
+                                        content: "✓";
+                                        position: absolute;
+                                        left: 0;
+                                        color: var(--ternary-color);
+                                        transition: all 0.3s ease;
+                                    }
+
+                                    // When password criteria is met
+                                    &.met {
+                                        color: var(--accent-color-2);
+                                        opacity: 1;
+                                        font-weight: 500;
+
+                                        &::before {
+                                            color: var(--accent-color-2);
+                                            opacity: 1;
+                                            transform: scale(1.1);
+                                        }
                                     }
                                 }
                             }
@@ -323,7 +507,7 @@
 
 // Tablet Landscape (768px - 1024px)
 @media (min-width: 768px) and (max-width: 1024px) {
-    #sign-in {
+    #sign-up {
         &::before {
             width: 1700px;
             height: 500px;
@@ -335,8 +519,6 @@
 
         .container {
             .form-section {
-                padding: 20% 0 10%;
-
                 .nav-section {
                     padding: 28px 32px;
 
@@ -362,9 +544,17 @@
                         .content-items {
                             .item-1 {
                                 .social-button-groups {
+                                    // Change to column layout below 1024px
+                                    flex-direction: column;
+
                                     .google-btn,
                                     .apple-btn {
                                         padding: 9px 14px;
+
+                                        // Show text below 1024px
+                                        .btn-text {
+                                            display: block;
+                                        }
 
                                         p {
                                             font-size: 16px;
@@ -405,7 +595,7 @@
 
 // Tablet Portrait / Large Mobile (481px - 767px)
 @media (min-width: 481px) and (max-width: 767px) {
-    #sign-in {
+    #sign-up {
         padding: 16px;
 
         &::before {
@@ -419,7 +609,7 @@
 
         .container {
             .form-section {
-                padding: 20% 0 10%;
+                padding: 24px 0;
 
                 .nav-section {
                     padding: 20px 24px;
@@ -446,9 +636,17 @@
                         .content-items {
                             .item-1 {
                                 .social-button-groups {
+                                    // Change to column layout
+                                    flex-direction: column;
+
                                     .google-btn,
                                     .apple-btn {
                                         padding: 10px 14px;
+
+                                        // Show text
+                                        .btn-text {
+                                            display: block;
+                                        }
 
                                         p {
                                             font-size: 16px;
@@ -503,7 +701,7 @@
 
 // Small Mobile (max-width: 480px)
 @media (max-width: 480px) {
-    #sign-in {
+    #sign-up {
         padding: 10px;
         &::before {
             width: 700px;
@@ -516,7 +714,7 @@
 
         .container {
             .form-section {
-                padding: 20% 0 10%;
+                padding: 30% 0 20%;
 
                 .nav-section {
                     padding: 10px;
@@ -546,9 +744,17 @@
                         .content-items {
                             .item-1 {
                                 .social-button-groups {
+                                    // Change to column layout
+                                    flex-direction: column;
+
                                     .google-btn,
                                     .apple-btn {
                                         padding: 9px 12px;
+
+                                        // Show text
+                                        .btn-text {
+                                            display: block;
+                                        }
 
                                         p {
                                             font-size: 14px;
@@ -579,6 +785,12 @@
                                             width: 16px;
                                             height: 16px;
                                         }
+                                    }
+                                }
+
+                                .password-requirements {
+                                    .requirement {
+                                        font-size: 11px;
                                     }
                                 }
 
@@ -613,5 +825,43 @@
                 display: none;
             }
         }
+    }
+}
+
+// Global styles for phone input dropdown (rendered outside component)
+.react-international-phone-country-selector-dropdown {
+    position: absolute;
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 4px;
+    z-index: 9999;
+
+    .react-international-phone-country-selector-dropdown__list-item {
+        padding: 8px 12px;
+        cursor: pointer;
+        color: var(--input-color);
+        transition: background-color 0.2s;
+        display: flex;
+        align-items: center;
+        background: var(--ternary-color);
+
+        &:hover {
+            background: var(--auth-style-bg);
+        }
+
+        .react-international-phone-country-selector-dropdown__list-item-dial-code {
+            color: var(--input-color);
+            margin-left: auto;
+        }
+    }
+
+    .react-international-phone-country-selector-dropdown__list-item--selected,
+    .react-international-phone-country-selector-dropdown__list-item[aria-selected="true"] {
+        background: var(--ternary-color);
+        color: var(--primary-color);
     }
 }

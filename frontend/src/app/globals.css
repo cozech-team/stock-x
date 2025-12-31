@@ -17,6 +17,7 @@
     --secondary-color: #050f3d;
     --ternary-color: #233a5b;
     --accent-color: #c94b4b;
+    --accent-color-2: #7f56d9;
     --text-muted: #79869f;
     --border-color: #334166;
     --input-color: #4d557d;
@@ -47,6 +48,9 @@
     --spacing-4xl: 28px;
     --spacing-5xl: 32px;
     --spacing-6xl: 36px;
+
+    /* Smooth theme transition */
+    transition: background 0.5s ease, color 0.5s ease;
 }
 
 /* =========================
@@ -64,8 +68,9 @@
     --primary-color: #ffffff;
     --primary-lighter-color: #fffefc;
     --secondary-color: #050f3d;
-    --ternary-color: #2652aa;
+    --ternary-color: #2454b5;
     --accent-color: #c9a44c;
+    --accent-color-2: #a5fff3;
     --text-muted: #a4c3ff;
     --border-color: #a4c3ff;
 }
@@ -86,4 +91,21 @@ body {
     background: var(--primary-bg);
     color: var(--primary-color);
     font-family: inherit;
+    transition: background 0.5s ease, color 0.5s ease;
+}
+
+/* Smooth transitions for all theme-dependent properties */
+* {
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, fill 0.4s ease,
+        stroke 0.4s ease;
+}
+
+/* Preserve specific transitions for interactive elements */
+button,
+a,
+input,
+textarea,
+select {
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, transform 0.3s ease,
+        box-shadow 0.3s ease, opacity 0.3s ease;
 }

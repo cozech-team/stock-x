@@ -1,9 +1,12 @@
-import SignIn from "@/components/SignIn/SignIn";
+// import SignIn from "@/components/SignIn/SignIn";
 
 export default function Home() {
     return (
         <>
-            <SignIn />
+            {/* <SignIn /> */}
+            <div className="home h-screen w-full flex justify-center items-center">
+                <h1 className="text-4xl font-bold">StockX</h1>
+            </div>
         </>
     );
 }
