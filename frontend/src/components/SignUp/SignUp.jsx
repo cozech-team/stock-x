@@ -2,14 +2,12 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { PhoneInput } from "react-international-phone";
-import "react-international-phone/style.css";
+
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import "./SignUp.scss";
 
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
 
     // Password validation criteria
@@ -100,13 +98,8 @@ const SignUp = () => {
                                                 Phone number <span>*</span>
                                             </label>
                                         </div>
-                                        <div className="phone-input-wrapper">
-                                            <PhoneInput
-                                                defaultCountry="us"
-                                                value={phone}
-                                                onChange={(phone) => setPhone(phone)}
-                                                placeholder="Enter phone number"
-                                            />
+                                        <div className="input-wrapper">
+                                            <input type="tel" name="phone" placeholder="Enter your phone number" required />
                                         </div>
                                     </div>
                                     <div className="form-group flex flex-col gap-2">

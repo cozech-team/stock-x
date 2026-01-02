@@ -1,27 +1,37 @@
-"use client";
-
 import { Inter } from "next/font/google";
+import ClientWrapper from "@/components/ClientWrapper/ClientWrapper";
 import "./globals.css";
-import { AnimatePresence } from "framer-motion";
-import { usePathname } from "next/navigation";
-import SmoothScroll from "@/components/SmoothScroll/SmoothScroll";
 
 const inter = Inter({
     subsets: ["latin"],
     weight: ["400", "500", "600", "700"],
 });
 
-export default function RootLayout({ children }) {
-    const pathname = usePathname();
+// You can now also export Metadata from here, which you couldn't do before!
+export const metadata = {
+    title: "My App",
+    description: "Built with Next.js",
+};
 
+export default function RootLayout({ children }) {
     return (
-        <html lang="en" data-theme="dark">
+        <html lang="en" suppressHydrationWarning>
+            <head>
+                {/* Prevent theme flicker on first paint */}
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `(function () {
+  try {
+    const theme = localStorage.getItem("theme") || "dark";
+    document.documentElement.setAttribute("data-theme", theme);
+  } catch (e) {}
+})();`,
+                    }}
+                />
+            </head>
+
             <body className={inter.className}>
-                <SmoothScroll>
-                    <AnimatePresence mode="wait">
-                        <div key={pathname}>{children}</div>
-                    </AnimatePresence>
-                </SmoothScroll>
+                <ClientWrapper>{children}</ClientWrapper>
             </body>
         </html>
     );
