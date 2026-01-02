@@ -7,7 +7,6 @@ const inter = Inter({
     weight: ["400", "500", "600", "700"],
 });
 
-// You can now also export Metadata from here, which you couldn't do before!
 export const metadata = {
     title: "My App",
     description: "Built with Next.js",
@@ -17,7 +16,6 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
-                {/* Prevent theme flicker on first paint */}
                 <script
                     dangerouslySetInnerHTML={{
                         __html: `(function () {
