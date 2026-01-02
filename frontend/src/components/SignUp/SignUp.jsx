@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { PhoneInput } from "react-international-phone";
-import "react-international-phone/style.css";
+
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import "./SignUp.scss";
 

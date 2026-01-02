@@ -1,10 +1,7 @@
-"use client";
-
 import { Inter } from "next/font/google";
+import ClientLayout from "@/components/ClientLayout/ClientLayout";
+import "react-international-phone/style.css";
 import "./globals.css";
-import { AnimatePresence } from "framer-motion";
-import { usePathname } from "next/navigation";
-import SmoothScroll from "@/components/SmoothScroll/SmoothScroll";
 
 const inter = Inter({
     subsets: ["latin"],
@@ -12,16 +9,24 @@ const inter = Inter({
 });
 
 export default function RootLayout({ children }) {
-    const pathname = usePathname();
-
     return (
-        <html lang="en" data-theme="dark">
+        <html lang="en" suppressHydrationWarning>
+            <head>
+                {/* Prevent theme flicker on first paint */}
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `(function () {
+  try {
+    const theme = localStorage.getItem("theme") || "dark";
+    document.documentElement.setAttribute("data-theme", theme);
+  } catch (e) {}
+})();`,
+                    }}
+                />
+            </head>
+
             <body className={inter.className}>
-                <SmoothScroll>
-                    <AnimatePresence mode="wait">
-                        <div key={pathname}>{children}</div>
-                    </AnimatePresence>
-                </SmoothScroll>
+                <ClientLayout>{children}</ClientLayout>
             </body>
         </html>
     );
