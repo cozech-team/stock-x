@@ -24,28 +24,31 @@
         .form-section {
             position: relative;
             height: 100%;
-            .nav-section {
-                position: absolute;
-                top: 0;
-                left: 0;
+            .form-container {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
                 width: 100%;
-                padding: 32px 40px;
-                z-index: 10;
 
-                .logo {
-                    width: 140px;
-                    pointer-events: none;
-                    user-select: none;
-                    img {
-                        width: 100%;
-                        height: auto;
+                .nav-section {
+                    position: relative;
+                    padding: 32px 40px;
+                    z-index: 10;
+
+                    .logo {
+                        width: 140px;
+                        pointer-events: none;
+                        user-select: none;
+                        img {
+                            width: 100%;
+                            height: auto;
+                        }
                     }
                 }
-            }
-            .form-container {
                 .content-wrapper {
-                    max-width: 380px;
-                    padding: 10px;
+                    max-width: 65%;
+                    padding: 80px 10px;
+                    margin: auto;
                     overflow: hidden;
                     .text-items {
                         h3 {
@@ -335,19 +338,20 @@
 
         .container {
             .form-section {
-                padding: 20% 0 10%;
-
-                .nav-section {
-                    padding: 28px 32px;
-
-                    .logo {
-                        width: 120px;
-                    }
-                }
+                align-items: flex-start;
+                padding: 0;
 
                 .form-container {
+                    .nav-section {
+                        padding: 28px 32px;
+
+                        .logo {
+                            width: 120px;
+                        }
+                    }
+
                     .content-wrapper {
-                        max-width: 340px;
+                        max-width: 60%;
                         padding: 8px;
 
                         .text-items {
@@ -406,7 +410,7 @@
 // Tablet Portrait / Large Mobile (481px - 767px)
 @media (min-width: 481px) and (max-width: 767px) {
     #sign-in {
-        padding: 16px;
+        padding: 0;
 
         &::before {
             width: 1700px;
@@ -419,19 +423,20 @@
 
         .container {
             .form-section {
-                padding: 20% 0 10%;
-
-                .nav-section {
-                    padding: 20px 24px;
-
-                    .logo {
-                        width: 110px;
-                    }
-                }
+                align-items: flex-start;
+                padding: 0;
 
                 .form-container {
+                    .nav-section {
+                        padding: 20px 24px;
+
+                        .logo {
+                            width: 110px;
+                        }
+                    }
+
                     .content-wrapper {
-                        max-width: 100%;
+                        max-width: 70%;
                         padding: 0 16px;
 
                         .text-items {
@@ -463,12 +468,6 @@
                                         input {
                                             padding: 10px 12px;
                                             font-size: 16px;
-                                        }
-
-                                        .toggle-icon {
-                                            right: 12px;
-                                            width: 18px;
-                                            height: 18px;
                                         }
                                     }
                                 }
@@ -504,7 +503,7 @@
 // Small Mobile (max-width: 480px)
 @media (max-width: 480px) {
     #sign-in {
-        padding: 10px;
+        padding: 0;
         &::before {
             width: 700px;
             height: 500px;
@@ -516,18 +515,18 @@
 
         .container {
             .form-section {
-                padding: 20% 0 10%;
-
-                .nav-section {
-                    padding: 10px;
-
-                    .logo {
-                        width: 100px;
-                    }
-                }
+                align-items: flex-start;
+                padding: 0;
 
                 .form-container {
                     padding: 0;
+                    .nav-section {
+                        padding: 18px 20px;
+
+                        .logo {
+                            width: 110px;
+                        }
+                    }
                     .content-wrapper {
                         max-width: 100%;
                         padding: 0 12px;
@@ -619,16 +618,16 @@
     #sign-in {
         .container {
             .form-section {
-                .nav-section {
-                    padding: clamp(32px, 3.125vw, 80px) clamp(40px, 4.6875vw, 120px);
-                    .logo {
-                        width: clamp(140px, 6.51vw, 240px);
-                    }
-                }
                 .form-container {
+                    .nav-section {
+                        padding: clamp(32px, 3.125vw, 80px) clamp(40px, 4.6875vw, 120px);
+                        .logo {
+                            width: clamp(140px, 6.51vw, 240px);
+                        }
+                    }
                     .content-wrapper {
-                        max-width: clamp(380px, 23.4375vw, 1000px);
-                        padding: clamp(10px, 0.78vw, 20px);
+                        max-width: 70%;
+                        padding: clamp(80px, 6.24vw, 160px) clamp(10px, 0.78vw, 20px);
                         gap: clamp(32px, 2.5vw, 64px);
 
                         .text-items {

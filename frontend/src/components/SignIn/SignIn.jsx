@@ -16,14 +16,14 @@ const SignIn = () => {
         <div className="sign-in" id="sign-in">
             <div className="container grid grid-cols-1 lg:grid-cols-2 min-h-screen w-full mx-auto">
                 <div className="form-section flex justify-center items-center">
-                    <div className="nav-section flex justify-between items-center">
-                        <div className="logo">
-                            <img src="/Svg/logo.svg" alt="logo" />
+                    <div className="form-container flex flex-col items-center w-full h-full">
+                        <div className="nav-section flex justify-between items-center w-full">
+                            <div className="logo">
+                                <img src="/Svg/logo.svg" alt="logo" />
+                            </div>
+                            <ThemeToggle />
                         </div>
-                        <ThemeToggle />
-                    </div>
-                    <div className="form-container flex justify-center items-center w-full h-full">
-                        <div className="content-wrapper flex flex-col justify-center items-start gap-8 h-fit w-full ">
+                        <div className="content-wrapper flex flex-col justify-center items-start gap-8 flex-1 w-full ">
                             <div className="text-items flex flex-col justify-center items-start gap-3 w-full ">
                                 <h3>Sign in</h3>
                                 <p>Access your personalized trading intelligence</p>

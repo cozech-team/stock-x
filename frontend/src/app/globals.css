@@ -21,7 +21,6 @@
     --text-muted: #79869f;
     --border-color: #334166;
     --input-color: #4d557d;
-    --selection-bg: #7f56d9;
     --selection-color: #ffffff;
 
     /* heading */
@@ -75,7 +74,6 @@
     --accent-color-2: #a5fff3;
     --text-muted: #a4c3ff;
     --border-color: #a4c3ff;
-    --selection-bg: #ffbd2e;
     --selection-color: #050f3d;
 }
 
@@ -118,11 +116,11 @@ select {
    SELECTION STYLES
 ========================= */
 ::selection {
-    background-color: var(--selection-bg);
+    background-color: var(--accent-color-2);
     color: var(--selection-color);
 }
 
 ::-moz-selection {
-    background-color: var(--selection-bg);
+    background-color: var(--accent-color-2);
     color: var(--selection-color);
 }
