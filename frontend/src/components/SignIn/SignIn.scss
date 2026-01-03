@@ -46,7 +46,7 @@
                     }
                 }
                 .content-wrapper {
-                    max-width: 65%;
+                    max-width: clamp(380px, 65%, 480px);
                     padding: 80px 10px;
                     margin: auto;
                     overflow: hidden;
@@ -351,7 +351,7 @@
                     }
 
                     .content-wrapper {
-                        max-width: 60%;
+                        max-width: 500px;
                         padding: 8px;
 
                         .text-items {
@@ -436,7 +436,7 @@
                     }
 
                     .content-wrapper {
-                        max-width: 70%;
+                        max-width: clamp(320px, 70%, 550px);
                         padding: 0 16px;
 
                         .text-items {
@@ -626,7 +626,7 @@
                         }
                     }
                     .content-wrapper {
-                        max-width: 70%;
+                        max-width: clamp(450px, 38vw, 750px);
                         padding: clamp(80px, 6.24vw, 160px) clamp(10px, 0.78vw, 20px);
                         gap: clamp(32px, 2.5vw, 64px);
 
