@@ -45,13 +45,13 @@ const SignUp = () => {
                         </div>
                         <ThemeToggle />
                     </div>
-                    <div className="form-container flex justify-center items-center">
-                        <div className="content-wrapper flex flex-col justify-center items-center gap-8">
+                    <div className="form-container flex justify-center items-center w-full h-full">
+                        <div className="content-wrapper flex flex-col justify-center items-start gap-8 h-fit w-full ">
                             <div className="text-items flex flex-col justify-center items-start gap-3 w-full ">
                                 <h3>Create your account</h3>
                                 <p>Start your journey to smarter trading decisions</p>
                             </div>
-                            <div className="content-items flex flex-col gap-6">
+                            <div className="content-items flex flex-col gap-6 w-full">
                                 <div className="item-1 flex flex-col gap-6">
                                     <div className="social-button-groups flex flex-col gap-3">
                                         <div className="google-btn flex justify-center items-center gap-3">
