@@ -21,6 +21,8 @@
     --text-muted: #79869f;
     --border-color: #334166;
     --input-color: #4d557d;
+    --selection-bg: #7f56d9;
+    --selection-color: #ffffff;
 
     /* heading */
     --heading-xs-font-size: 24px;
@@ -73,6 +75,8 @@
     --accent-color-2: #a5fff3;
     --text-muted: #a4c3ff;
     --border-color: #a4c3ff;
+    --selection-bg: #ffbd2e;
+    --selection-color: #050f3d;
 }
 
 /* =========================
@@ -108,4 +112,17 @@ textarea,
 select {
     transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, transform 0.3s ease,
         box-shadow 0.3s ease, opacity 0.3s ease;
+}
+
+/* =========================
+   SELECTION STYLES
+========================= */
+::selection {
+    background-color: var(--selection-bg);
+    color: var(--selection-color);
+}
+
+::-moz-selection {
+    background-color: var(--selection-bg);
+    color: var(--selection-color);
 }
