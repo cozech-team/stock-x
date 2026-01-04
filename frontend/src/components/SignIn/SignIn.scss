@@ -614,7 +614,7 @@
         }
     }
 }
-@media (min-width: 1282px) {
+@media (min-width: 1600px) {
     #sign-in {
         .container {
             .form-section {
@@ -654,6 +654,11 @@
                                         }
                                     }
                                 }
+                                .divider {
+                                    p {
+                                        font-size: clamp(14px, calc(0.45vw + 9px), 21px);
+                                    }
+                                }
                             }
                             .item-2 {
                                 gap: clamp(20px, 1.82vw, 48px);
@@ -689,6 +694,11 @@
                                     span {
                                         font-size: clamp(14px, calc(0.39vw + 10px), 20px);
                                     }
+                                }
+                            }
+                            .item-3 {
+                                p {
+                                    font-size: clamp(14px, calc(0.39vw + 10px), 20px);
                                 }
                             }
                         }
@@ -940,7 +950,7 @@
                                         padding: clamp(10px, calc(0.85vw + 12px), 80px)
                                             clamp(16px, calc(1.04vw + 12px), 62px);
                                         p {
-                                            font-size: clamp(16px, calc(0.62vw + 16px), 110px);
+                                            font-size: clamp(16px, calc(0.62vw + 16px), 80px);
                                         }
                                         img {
                                             transform: scale(1.8);

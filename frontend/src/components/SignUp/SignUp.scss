@@ -734,6 +734,104 @@
     }
 }
 
+@media (min-width: 1600px) {
+    #sign-up {
+        .container {
+            .form-section {
+                .form-container {
+                    .nav-section {
+                        padding: clamp(32px, 3.125vw, 80px) clamp(40px, 4.6875vw, 120px);
+                        .logo {
+                            width: clamp(140px, 6.51vw, 240px);
+                        }
+                    }
+                    .content-wrapper {
+                        max-width: clamp(450px, 70%, 750px);
+                        padding: clamp(80px, 6.24vw, 160px) clamp(10px, 0.78vw, 20px);
+                        gap: clamp(32px, 2.5vw, 64px);
+
+                        .text-items {
+                            h3 {
+                                font-size: clamp(30px, calc(2.03vw + 10px), 52px);
+                                line-height: 1.2;
+                            }
+                            p {
+                                font-size: clamp(14px, calc(0.45vw + 9px), 21px);
+                            }
+                        }
+
+                        .content-items {
+                            gap: clamp(24px, 2.08vw, 56px);
+                            .item-1 {
+                                gap: clamp(24px, 2.08vw, 56px);
+                                .social-button-groups {
+                                    gap: clamp(12px, 1.3vw, 32px);
+                                    .google-btn,
+                                    .apple-btn {
+                                        padding: clamp(10px, calc(0.65vw + 3px), 20px) clamp(16px, calc(1.04vw + 5px), 32px);
+                                        p {
+                                            font-size: clamp(16px, calc(0.32vw + 12px), 21px);
+                                        }
+                                    }
+                                }
+                            }
+                            .item-2 {
+                                gap: clamp(20px, 1.82vw, 48px);
+                                .form-group {
+                                    gap: clamp(8px, calc(0.52vw + 2px), 16px);
+                                    .label-wrapper {
+                                        label {
+                                            font-size: clamp(14px, calc(0.45vw + 9px), 21px);
+                                        }
+                                        a {
+                                            font-size: clamp(13px, calc(0.32vw + 9px), 18px);
+                                        }
+                                    }
+                                    .input-wrapper {
+                                        input {
+                                            padding: clamp(10px, calc(0.65vw + 3px), 20px)
+                                                clamp(14px, calc(0.65vw + 7px), 24px);
+                                            font-size: clamp(14px, calc(0.45vw + 9px), 21px);
+                                            &::placeholder {
+                                                font-size: clamp(16px, calc(0.32vw + 12px), 21px);
+                                            }
+                                        }
+                                    }
+                                }
+                                .password-requirements {
+                                    gap: clamp(8px, calc(0.39vw + 5px), 15px);
+                                    .requirement {
+                                        font-size: clamp(12px, calc(0.39vw + 10px), 18px);
+                                        padding-left: 24px;
+                                    }
+                                }
+                                button {
+                                    padding: clamp(10px, calc(0.65vw + 3px), 20px) clamp(16px, calc(1.04vw + 5px), 32px);
+                                    span {
+                                        font-size: clamp(16px, calc(0.39vw + 12px), 22px);
+                                    }
+                                }
+                                h6 {
+                                    font-size: clamp(14px, calc(0.39vw + 10px), 20px);
+                                    span {
+                                        font-size: clamp(14px, calc(0.39vw + 10px), 20px);
+                                    }
+                                }
+                            }
+                            .item-3 {
+                                gap: clamp(15px, calc(0.65vw + 10px), 40px);
+                                p {
+                                    font-size: clamp(14px, calc(0.39vw + 10px), 20px);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media (min-width: 1920px) {
     #sign-up {
         .container {
@@ -772,6 +870,11 @@
                                         p {
                                             font-size: clamp(16px, calc(0.32vw + 16px), 21px);
                                         }
+                                    }
+                                }
+                                .divider {
+                                    p {
+                                        font-size: clamp(20px, calc(0.42vw + 16px), 42px);
                                     }
                                 }
                             }
@@ -981,7 +1084,7 @@
                                         padding: clamp(10px, calc(0.85vw + 12px), 80px)
                                             clamp(16px, calc(1.04vw + 12px), 62px);
                                         p {
-                                            font-size: clamp(16px, calc(0.62vw + 16px), 110px);
+                                            font-size: clamp(16px, calc(0.62vw + 16px), 80px);
                                         }
                                         img {
                                             transform: scale(1.8);
@@ -1136,9 +1239,6 @@
                                             &::placeholder {
                                                 font-size: clamp(20px, calc(0.65vw + 24px), 52px);
                                             }
-                                        }
-                                        svg {
-                                            display: none;
                                         }
                                     }
                                 }
