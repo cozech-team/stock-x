@@ -1,8 +1,14 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import "./CheckEmail.scss";
-
+import { useRouter } from "next/navigation";
 const CheckEmail = () => {
+    const router = useRouter();
+    const handleOpenEmailApp = () => {
+        router.push("/set-password");
+    };
     return (
         <div id="check-email" className="check-email">
             <div className="container min-h-screen w-full mx-auto flex justify-center items-center ">
@@ -21,7 +27,7 @@ const CheckEmail = () => {
                     </div>
                     <div className="item-2 flex flex-col items-center justify-center gap-6 w-full">
                         <div className="button w-full">
-                            <button type="button">
+                            <button type="button" onClick={handleOpenEmailApp}>
                                 <span data-text="Open email app">Open email app</span>
                             </button>
                         </div>
