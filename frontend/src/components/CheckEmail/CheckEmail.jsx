@@ -1,18 +1,10 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import "./ForgotPassword.scss";
+import "./CheckEmail.scss";
 
-const ForgotPassword = () => {
-    const router = useRouter();
-
-    const handleForgotPassword = () => {
-        router.push("/check-email");
-    };
+const CheckEmail = () => {
     return (
-        <div id="forgot-password" className="forgot-password">
+        <div id="check-email" className="check-email">
             <div className="container min-h-screen w-full mx-auto flex justify-center items-center ">
                 <div className="grid-style">
                     <img src="/Svg/grid-style.svg" alt="Grid Style" />
@@ -20,26 +12,23 @@ const ForgotPassword = () => {
                 <div className="content flex flex-col items-center justify-center gap-8">
                     <div className="item-1 flex flex-col items-center justify-center gap-6 w-full">
                         <div className="icon flex items-center justify-center">
-                            <img src="/Svg/forgot-key.svg" alt="Forgot Key" />
+                            <img src="/Svg/email-icon.svg" alt="Email Icon" />
                         </div>
                         <div className="header-text-content flex flex-col items-center justify-center gap-3">
-                            <h2>Forgot Password</h2>
-                            <p>No worries, we’ll send you reset instructions.</p>
+                            <h2>Check your email</h2>
+                            <p>We sent a password reset link to user@stock-x.com</p>
                         </div>
                     </div>
                     <div className="item-2 flex flex-col items-center justify-center gap-6 w-full">
-                        <div className="form w-full">
-                            <div className="form-group flex flex-col items-start justify-center gap-2">
-                                <label htmlFor="email">
-                                    Email <span>*</span>
-                                </label>
-                                <input type="email" id="email" name="email" placeholder="Enter your email" required />
-                            </div>
-                        </div>
                         <div className="button w-full">
-                            <button type="submit" onClick={handleForgotPassword}>
-                                <span data-text="Reset Password">Reset Password</span>
+                            <button type="button">
+                                <span data-text="Open email app">Open email app</span>
                             </button>
+                        </div>
+                        <div className="resend-text">
+                            <p>
+                                Didn't receive the email? <Link href="/forgot-password">Click to resend</Link>
+                            </p>
                         </div>
                     </div>
                     <div className="item-3">
@@ -47,7 +36,7 @@ const ForgotPassword = () => {
                             <div className="icon">
                                 <img src="/Svg/left-arrow.svg" alt="Left Arrow" />
                             </div>
-                            <Link href="/signin">Back to Sign In</Link>
+                            <Link href="/signin">Back to log in</Link>
                         </div>
                     </div>
                 </div>
@@ -56,4 +45,4 @@ const ForgotPassword = () => {
     );
 };
 
-export default ForgotPassword;
+export default CheckEmail;

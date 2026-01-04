@@ -1,4 +1,4 @@
-#forgot-password {
+#check-email {
     position: relative;
     overflow: hidden;
 
@@ -63,46 +63,12 @@
                         font-size: 14px;
                         font-weight: 400;
                         line-height: var(--text-md-line-height);
+                        text-align: center;
                     }
                 }
             }
 
             .item-2 {
-                .form {
-                    .form-group {
-                        label {
-                            font-size: var(--text-sm-font-size);
-                            font-weight: 500;
-                            line-height: var(--text-sm-line-height);
-                            color: var(--primary-lighter-color);
-                            span {
-                                color: var(--accent-color-2);
-                            }
-                        }
-                        input {
-                            width: 100%;
-                            border-radius: 10px;
-                            outline: none;
-                            border: 1px solid var(--border-color);
-                            padding: 10px 14px;
-                            background: var(--input-bg);
-                            box-shadow: 0px 1px 2px 0px rgba(10, 13, 18, 0.05);
-                            color: var(--input-color);
-
-                            &::placeholder {
-                                font-size: var(--text-md-font-size);
-                                font-weight: 400;
-                                line-height: var(--text-md-line-height);
-                                color: var(--input-color);
-                            }
-                            &:focus {
-                                border: 1px solid var(--accent-color);
-                                outline: none;
-                                color: var(--accent-color);
-                            }
-                        }
-                    }
-                }
                 .button {
                     text-align: center;
                     button {
@@ -178,6 +144,26 @@
                         }
                     }
                 }
+                .resend-text {
+                    text-align: center;
+                    p {
+                        color: var(--text-muted);
+                        font-size: 14px;
+                        font-weight: 400;
+                        line-height: var(--text-md-line-height);
+
+                        a {
+                            color: var(--accent-color);
+                            font-weight: 600;
+                            text-decoration: none;
+                            transition: color 0.3s ease;
+
+                            &:hover {
+                                color: var(--primary-color);
+                            }
+                        }
+                    }
+                }
             }
 
             .item-3 {
@@ -210,8 +196,9 @@
         }
     }
 }
+
 @media (max-width: 480px) {
-    #forgot-password {
+    #check-email {
         &::before {
             width: 100vw;
             height: 300px;
@@ -250,34 +237,23 @@
                         p {
                             font-size: 14px;
                             line-height: 20px;
-                            text-align: center;
                         }
                     }
                 }
 
                 .item-2 {
                     gap: 24px;
-                    .form {
-                        .form-group {
-                            gap: 6px;
-                            label {
-                                font-size: 14px;
-                            }
-                            input {
-                                padding: 12px 14px;
-                                font-size: 14px;
-                                &::placeholder {
-                                    font-size: 14px;
-                                }
-                            }
-                        }
-                    }
                     .button {
                         button {
                             padding: 12px 16px;
                             span {
                                 font-size: 16px;
                             }
+                        }
+                    }
+                    .resend-text {
+                        p {
+                            font-size: 14px;
                         }
                     }
                 }
@@ -300,7 +276,7 @@
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
-    #forgot-password {
+    #check-email {
         &::before {
             width: 100vw;
             height: 300px;
@@ -329,17 +305,6 @@
                 }
 
                 .item-2 {
-                    .form {
-                        .form-group {
-                            label {
-                                font-size: 15px;
-                            }
-                            input {
-                                padding: 14px 16px;
-                                font-size: 15px;
-                            }
-                        }
-                    }
                     .button {
                         button {
                             padding: 14px 18px;
@@ -355,7 +320,7 @@
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-    #forgot-password {
+    #check-email {
         .container {
             .content {
                 width: 60%;
@@ -377,17 +342,6 @@
                 }
 
                 .item-2 {
-                    .form {
-                        .form-group {
-                            label {
-                                font-size: 16px;
-                            }
-                            input {
-                                padding: 16px 20px;
-                                font-size: 16px;
-                            }
-                        }
-                    }
                     .button {
                         button {
                             padding: 16px 20px;
@@ -403,7 +357,7 @@
 }
 
 @media (min-width: 1600px) {
-    #forgot-password {
+    #check-email {
         .container {
             .grid-style {
                 width: 100vw;
@@ -437,27 +391,17 @@
 
                 .item-2 {
                     gap: clamp(20px, 2vw, 48px);
-                    .form {
-                        .form-group {
-                            gap: clamp(8px, 0.8vw, 14px);
-                            label {
-                                font-size: clamp(14px, calc(0.35vw + 12px), 20px);
-                            }
-                            input {
-                                padding: clamp(10px, 1vw, 20px) clamp(14px, 1.2vw, 28px);
-                                font-size: clamp(14px, calc(0.35vw + 12px), 20px);
-                                &::placeholder {
-                                    font-size: clamp(14px, calc(0.35vw + 12px), 20px);
-                                }
-                            }
-                        }
-                    }
                     .button {
                         button {
                             padding: clamp(10px, 1vw, 20px) clamp(14px, 1.2vw, 28px);
                             span {
                                 font-size: clamp(16px, calc(0.3vw + 14px), 22px);
                             }
+                        }
+                    }
+                    .resend-text {
+                        p {
+                            font-size: clamp(14px, calc(0.3vw + 12px), 20px);
                         }
                     }
                 }
@@ -480,7 +424,7 @@
 }
 
 @media (min-width: 1920px) {
-    #forgot-password {
+    #check-email {
         .container {
             .content {
                 width: clamp(450px, 35vw, 750px);
@@ -508,27 +452,17 @@
 
                 .item-2 {
                     gap: clamp(32px, 3vw, 52px);
-                    .form {
-                        .form-group {
-                            gap: clamp(10px, 1vw, 20px);
-                            label {
-                                font-size: clamp(16px, calc(0.45vw + 12px), 21px);
-                            }
-                            input {
-                                padding: clamp(15px, 1.2vw, 25px) clamp(20px, 1.5vw, 35px);
-                                font-size: clamp(16px, calc(0.45vw + 12px), 21px);
-                                &::placeholder {
-                                    font-size: clamp(16px, calc(0.45vw + 12px), 21px);
-                                }
-                            }
-                        }
-                    }
                     .button {
                         button {
                             padding: clamp(15px, 1.2vw, 25px) clamp(20px, 1.5vw, 35px);
                             span {
                                 font-size: clamp(18px, calc(0.35vw + 14px), 24px);
                             }
+                        }
+                    }
+                    .resend-text {
+                        p {
+                            font-size: clamp(16px, calc(0.35vw + 12px), 24px);
                         }
                     }
                 }
@@ -551,7 +485,7 @@
 }
 
 @media (min-width: 2560px) {
-    #forgot-password {
+    #check-email {
         .container {
             .content {
                 width: clamp(550px, 38vw, 950px);
@@ -580,22 +514,6 @@
 
                 .item-2 {
                     gap: clamp(48px, 5vw, 56px);
-                    .form {
-                        .form-group {
-                            gap: clamp(14px, 1.5vw, 28px);
-                            label {
-                                font-size: clamp(24px, calc(0.6vw + 18px), 36px);
-                            }
-                            input {
-                                border-radius: 16px;
-                                padding: clamp(25px, 2vw, 30px) clamp(35px, 2.5vw, 45px);
-                                font-size: clamp(24px, calc(0.6vw + 18px), 36px);
-                                &::placeholder {
-                                    font-size: clamp(24px, calc(0.6vw + 18px), 36px);
-                                }
-                            }
-                        }
-                    }
                     .button {
                         button {
                             border-radius: 16px;
@@ -603,6 +521,11 @@
                             span {
                                 font-size: clamp(26px, calc(0.5vw + 20px), 38px);
                             }
+                        }
+                    }
+                    .resend-text {
+                        p {
+                            font-size: clamp(26px, calc(0.5vw + 20px), 32px);
                         }
                     }
                 }
@@ -625,7 +548,7 @@
 }
 
 @media (min-width: 3840px) {
-    #forgot-password {
+    #check-email {
         .container {
             .content {
                 width: clamp(750px, 40vw, 1550px);
@@ -654,29 +577,18 @@
 
                 .item-2 {
                     gap: clamp(72px, 6vw, 92px);
-                    .form {
-                        .form-group {
-                            gap: clamp(20px, 2.2vw, 44px);
-                            label {
-                                font-size: clamp(36px, calc(0.9vw + 25px), 48px);
-                            }
-                            input {
-                                border-radius: 20px;
-                                padding: clamp(40px, 3.5vw, 50px) clamp(55px, 4.5vw, 65px);
-                                font-size: clamp(36px, calc(0.9vw + 25px), 48px);
-                                &::placeholder {
-                                    font-size: clamp(36px, calc(0.9vw + 25px), 48px);
-                                }
-                            }
-                        }
-                    }
                     .button {
                         button {
                             border-radius: 20px;
-                            padding: clamp(45px, 3.5vw, 65px) clamp(55px, 4.5vw, 65px);
+                            padding: clamp(45px, 3.5vw, 55px) clamp(55px, 4.5vw, 65px);
                             span {
                                 font-size: clamp(38px, calc(0.6vw + 30px), 52px);
                             }
+                        }
+                    }
+                    .resend-text {
+                        p {
+                            font-size: clamp(38px, calc(0.6vw + 30px), 48px);
                         }
                     }
                 }
@@ -699,7 +611,7 @@
 }
 
 @media (min-width: 5120px) {
-    #forgot-password {
+    #check-email {
         .container {
             .content {
                 width: clamp(950px, 42vw, 2000px);
@@ -728,22 +640,6 @@
 
                 .item-2 {
                     gap: clamp(92px, 8vw, 130px);
-                    .form {
-                        .form-group {
-                            gap: clamp(32px, 3.2vw, 74px);
-                            label {
-                                font-size: clamp(58px, calc(1.2vw + 35px), 72px);
-                            }
-                            input {
-                                border-radius: 28px;
-                                padding: clamp(55px, 4.5vw, 70px) clamp(85px, 5.5vw, 115px);
-                                font-size: clamp(58px, calc(1.2vw + 35px), 72px);
-                                &::placeholder {
-                                    font-size: clamp(58px, calc(1.2vw + 35px), 72px);
-                                }
-                            }
-                        }
-                    }
                     .button {
                         button {
                             border-radius: 28px;
@@ -751,6 +647,11 @@
                             span {
                                 font-size: clamp(52px, calc(0.8vw + 40px), 72px);
                             }
+                        }
+                    }
+                    .resend-text {
+                        p {
+                            font-size: clamp(52px, calc(0.8vw + 40px), 62px);
                         }
                     }
                 }
