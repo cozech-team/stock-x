@@ -734,7 +734,7 @@
     }
 }
 
-@media (min-width: 1282px) {
+@media (min-width: 1920px) {
     #sign-up {
         .container {
             .form-section {
@@ -742,79 +742,431 @@
                     .nav-section {
                         padding: clamp(32px, 3.125vw, 80px) clamp(40px, 4.6875vw, 120px);
                         .logo {
-                            width: clamp(140px, 6.51vw, 240px);
+                            width: clamp(140px, 8.51vw, 270px);
                         }
                     }
                     .content-wrapper {
                         max-width: clamp(450px, 38vw, 750px);
                         padding: clamp(80px, 6.24vw, 160px) clamp(10px, 0.78vw, 20px);
-                        gap: clamp(32px, 2.5vw, 64px);
+                        gap: clamp(32px, 3.4vw, 72px);
 
                         .text-items {
                             h3 {
-                                font-size: clamp(30px, calc(2.03vw + 10px), 52px);
+                                font-size: clamp(30px, calc(2.03vw + 14px), 52px);
                                 line-height: 1.2;
                             }
                             p {
-                                font-size: clamp(14px, calc(0.45vw + 9px), 21px);
+                                font-size: clamp(14px, calc(0.45vw + 14px), 21px);
                             }
                         }
 
                         .content-items {
-                            gap: clamp(24px, 2.08vw, 56px);
+                            gap: clamp(24px, 3.08vw, 72px);
                             .item-1 {
-                                gap: clamp(24px, 2.08vw, 56px);
+                                gap: clamp(24px, 3.08vw, 72px);
                                 .social-button-groups {
                                     gap: clamp(12px, 1.3vw, 32px);
                                     .google-btn,
                                     .apple-btn {
-                                        padding: clamp(10px, calc(0.65vw + 3px), 20px) clamp(16px, calc(1.04vw + 5px), 32px);
+                                        padding: clamp(10px, calc(0.65vw + 6px), 20px) clamp(16px, calc(1.04vw + 5px), 32px);
                                         p {
-                                            font-size: clamp(16px, calc(0.32vw + 12px), 21px);
+                                            font-size: clamp(16px, calc(0.32vw + 16px), 21px);
                                         }
                                     }
                                 }
                             }
                             .item-2 {
-                                gap: clamp(20px, 1.82vw, 48px);
+                                gap: clamp(20px, 2.82vw, 48px);
                                 .form-group {
-                                    gap: clamp(8px, calc(0.52vw + 2px), 16px);
+                                    gap: clamp(8px, calc(0.52vw + 6px), 16px);
                                     .label-wrapper {
                                         label {
-                                            font-size: clamp(14px, calc(0.45vw + 9px), 21px);
+                                            font-size: clamp(14px, calc(0.45vw + 16px), 21px);
                                         }
                                         a {
-                                            font-size: clamp(13px, calc(0.32vw + 9px), 18px);
+                                            font-size: clamp(13px, calc(0.32vw + 16px), 18px);
                                         }
                                     }
                                     .input-wrapper {
                                         input {
-                                            padding: clamp(10px, calc(0.65vw + 3px), 20px)
+                                            padding: clamp(10px, calc(0.65vw + 6px), 20px)
                                                 clamp(14px, calc(0.65vw + 7px), 24px);
-                                            font-size: clamp(14px, calc(0.45vw + 9px), 21px);
+                                            font-size: clamp(14px, calc(0.45vw + 16px), 21px);
                                             &::placeholder {
-                                                font-size: clamp(16px, calc(0.32vw + 12px), 21px);
+                                                font-size: clamp(16px, calc(0.32vw + 16px), 21px);
                                             }
                                         }
                                     }
                                 }
                                 .password-requirements {
-                                    gap: clamp(8px, calc(0.39vw + 4px), 14px);
+                                    gap: clamp(8px, calc(0.39vw + 8px), 18px);
                                     .requirement {
-                                        font-size: clamp(12px, calc(0.39vw + 8px), 18px);
+                                        font-size: clamp(12px, calc(0.39vw + 14px), 21px);
+                                        padding-left: 30px;
                                     }
                                 }
                                 button {
-                                    padding: clamp(10px, calc(0.65vw + 3px), 20px) clamp(16px, calc(1.04vw + 5px), 32px);
+                                    padding: clamp(10px, calc(0.65vw + 6px), 20px) clamp(16px, calc(1.04vw + 5px), 32px);
                                     span {
-                                        font-size: clamp(16px, calc(0.39vw + 12px), 22px);
+                                        font-size: clamp(16px, calc(0.39vw + 16px), 22px);
                                     }
                                 }
                                 h6 {
-                                    font-size: clamp(14px, calc(0.39vw + 10px), 20px);
+                                    font-size: clamp(14px, calc(0.39vw + 16px), 20px);
                                     span {
-                                        font-size: clamp(14px, calc(0.39vw + 10px), 20px);
+                                        font-size: clamp(14px, calc(0.39vw + 16px), 20px);
                                     }
+                                }
+                            }
+                            .item-3 {
+                                gap: clamp(15px, calc(0.65vw + 12px), 46px);
+                                p {
+                                    font-size: clamp(14px, calc(0.39vw + 16px), 20px);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 2560px) {
+    #sign-up {
+        .container {
+            .form-section {
+                .form-container {
+                    .nav-section {
+                        padding: clamp(32px, 3.125vw, 80px) clamp(40px, 4.6875vw, 120px);
+                        .logo {
+                            width: clamp(140px, 9.51vw, 270px);
+                        }
+                    }
+                    .content-wrapper {
+                        max-width: clamp(450px, 38vw, 950px);
+                        padding: clamp(80px, 6.24vw, 160px) clamp(10px, 0.78vw, 20px);
+                        gap: clamp(32px, 4vw, 112px);
+
+                        .text-items {
+                            h3 {
+                                font-size: clamp(30px, calc(2.03vw + 20px), 72px);
+                                line-height: 1.2;
+                            }
+                            p {
+                                font-size: clamp(14px, calc(0.45vw + 18px), 28px);
+                            }
+                        }
+
+                        .content-items {
+                            gap: clamp(24px, 3.08vw, 72px);
+                            .item-1 {
+                                gap: clamp(24px, 3.08vw, 92px);
+                                .social-button-groups {
+                                    gap: clamp(12px, 1.3vw, 32px);
+                                    .google-btn,
+                                    .apple-btn {
+                                        padding: clamp(10px, calc(0.65vw + 8px), 30px) clamp(16px, calc(1.04vw + 8px), 32px);
+                                        p {
+                                            font-size: clamp(16px, calc(0.32vw + 16px), 32px);
+                                        }
+                                        img {
+                                            transform: scale(1.2);
+                                        }
+                                        &:hover {
+                                            img {
+                                                transform: scale(1.4);
+                                            }
+                                        }
+                                    }
+                                }
+                                .divider {
+                                    p {
+                                        font-size: clamp(20px, calc(0.62vw + 18px), 60px);
+                                    }
+                                }
+                            }
+                            .item-2 {
+                                gap: clamp(20px, 2.82vw, 48px);
+                                .form-group {
+                                    gap: clamp(8px, calc(0.52vw + 6px), 16px);
+                                    .label-wrapper {
+                                        label {
+                                            font-size: clamp(14px, calc(0.45vw + 16px), 30px);
+                                        }
+                                        a {
+                                            font-size: clamp(13px, calc(0.32vw + 14px), 28px);
+                                        }
+                                    }
+                                    .input-wrapper {
+                                        input {
+                                            padding: clamp(10px, calc(0.65vw + 6px), 20px)
+                                                clamp(14px, calc(0.65vw + 7px), 24px);
+                                            font-size: clamp(14px, calc(0.45vw + 16px), 30px);
+                                            &::placeholder {
+                                                font-size: clamp(16px, calc(0.32vw + 16px), 30px);
+                                            }
+                                        }
+                                    }
+                                }
+                                .password-requirements {
+                                    gap: clamp(8px, calc(0.39vw + 10px), 22px);
+                                    .requirement {
+                                        font-size: clamp(12px, calc(0.39vw + 18px), 28px);
+                                        padding-left: 46px;
+                                    }
+                                }
+                                button {
+                                    padding: clamp(10px, calc(0.65vw + 6px), 30px) clamp(16px, calc(1.04vw + 5px), 60px);
+                                    span {
+                                        font-size: clamp(16px, calc(0.39vw + 16px), 30px);
+                                    }
+                                }
+                                h6 {
+                                    font-size: clamp(14px, calc(0.39vw + 16px), 30px);
+                                    span {
+                                        font-size: clamp(14px, calc(0.39vw + 16px), 30px);
+                                    }
+                                }
+                            }
+                            .item-3 {
+                                gap: clamp(15px, calc(0.65vw + 13px), 52px);
+                                p {
+                                    font-size: clamp(14px, calc(0.39vw + 16px), 30px);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 3840px) {
+    #sign-up {
+        .container {
+            .form-section {
+                .form-container {
+                    .nav-section {
+                        padding: clamp(32px, 3.125vw, 80px) clamp(40px, 4.6875vw, 120px);
+                        .logo {
+                            width: clamp(140px, 9.51vw, 370px);
+                        }
+                    }
+                    .content-wrapper {
+                        max-width: clamp(450px, 38vw, 1250px);
+                        padding: clamp(80px, 6.24vw, 160px) clamp(10px, 0.78vw, 20px);
+                        gap: clamp(32px, 4vw, 142px);
+
+                        .text-items {
+                            gap: clamp(24px, 3.08vw, 52px);
+                            h3 {
+                                font-size: clamp(30px, calc(2.03vw + 20px), 92px);
+                                line-height: 1.2;
+                            }
+                            p {
+                                font-size: clamp(14px, calc(0.65vw + 18px), 52px);
+                            }
+                        }
+
+                        .content-items {
+                            gap: clamp(24px, 3.08vw, 82px);
+                            .item-1 {
+                                gap: clamp(24px, 3.08vw, 82px);
+                                .social-button-groups {
+                                    gap: clamp(12px, 1.3vw, 32px);
+                                    .google-btn,
+                                    .apple-btn {
+                                        padding: clamp(10px, calc(0.85vw + 12px), 80px)
+                                            clamp(16px, calc(1.04vw + 12px), 62px);
+                                        p {
+                                            font-size: clamp(16px, calc(0.62vw + 16px), 110px);
+                                        }
+                                        img {
+                                            transform: scale(1.8);
+                                            margin-right: 12px;
+                                        }
+                                        &:hover {
+                                            img {
+                                                transform: scale(2);
+                                            }
+                                        }
+                                    }
+                                }
+                                .divider {
+                                    p {
+                                        font-size: clamp(20px, calc(0.62vw + 24px), 80px);
+                                    }
+                                }
+                            }
+                            .item-2 {
+                                gap: clamp(20px, 2.82vw, 68px);
+                                .form-group {
+                                    gap: clamp(8px, calc(0.65vw + 6px), 26px);
+                                    .label-wrapper {
+                                        label {
+                                            font-size: clamp(14px, calc(0.65vw + 18px), 52px);
+                                        }
+                                        a {
+                                            font-size: clamp(13px, calc(0.65vw + 16px), 40px);
+                                        }
+                                    }
+                                    .input-wrapper {
+                                        input {
+                                            padding: clamp(10px, calc(0.65vw + 6px), 30px)
+                                                clamp(14px, calc(0.65vw + 7px), 40px);
+                                            font-size: clamp(14px, calc(0.65vw + 16px), 40px);
+                                            &::placeholder {
+                                                font-size: clamp(16px, calc(0.65vw + 16px), 40px);
+                                            }
+                                        }
+                                    }
+                                }
+                                .password-requirements {
+                                    gap: clamp(12px, calc(0.52vw + 14px), 40px);
+                                    .requirement {
+                                        font-size: clamp(18px, calc(0.52vw + 20px), 40px);
+                                        padding-left: 56px;
+                                    }
+                                }
+                                button {
+                                    padding: clamp(10px, calc(0.65vw + 8px), 50px) clamp(16px, calc(1.04vw + 5px), 60px);
+                                    span {
+                                        font-size: clamp(16px, calc(0.65vw + 16px), 40px);
+                                    }
+                                }
+                                h6 {
+                                    font-size: clamp(14px, calc(0.65vw + 16px), 40px);
+                                    span {
+                                        font-size: clamp(14px, calc(0.52vw + 16px), 40px);
+                                    }
+                                }
+                            }
+
+                            .item-3 {
+                                gap: clamp(15px, calc(0.65vw + 16px), 40px);
+                                p {
+                                    font-size: clamp(20px, calc(0.65vw + 16px), 40px);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 5120px) {
+    #sign-up {
+        .container {
+            .form-section {
+                .form-container {
+                    .nav-section {
+                        padding: clamp(40px, 3.125vw, 100px) clamp(60px, 4.6875vw, 180px);
+                        .logo {
+                            width: clamp(200px, 9.51vw, 480px);
+                        }
+                    }
+                    .content-wrapper {
+                        max-width: clamp(600px, 38vw, 1600px);
+                        padding: clamp(100px, 6.24vw, 220px) clamp(20px, 0.78vw, 40px);
+                        gap: clamp(48px, 4vw, 180px);
+
+                        .text-items {
+                            gap: clamp(32px, 3.08vw, 72px);
+                            h3 {
+                                font-size: clamp(40px, calc(2.03vw + 30px), 120px);
+                                line-height: 1.2;
+                            }
+                            p {
+                                font-size: clamp(20px, calc(0.65vw + 24px), 68px);
+                            }
+                        }
+
+                        .content-items {
+                            gap: clamp(32px, 3.08vw, 110px);
+                            .item-1 {
+                                gap: clamp(32px, 3.08vw, 110px);
+                                .social-button-groups {
+                                    gap: clamp(20px, 1.3vw, 48px);
+                                    .google-btn,
+                                    .apple-btn {
+                                        padding: clamp(15px, calc(0.85vw + 16px), 100px)
+                                            clamp(24px, calc(1.04vw + 16px), 80px);
+                                        p {
+                                            font-size: clamp(20px, calc(0.62vw + 24px), 80px);
+                                        }
+                                        img {
+                                            transform: scale(2.2);
+                                            margin-right: 18px;
+                                        }
+                                        &:hover {
+                                            img {
+                                                transform: scale(2.5);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .divider {
+                                    p {
+                                        font-size: clamp(20px, calc(0.62vw + 24px), 80px);
+                                    }
+                                }
+                            }
+                            .item-2 {
+                                gap: clamp(32px, 2.82vw, 92px);
+                                .form-group {
+                                    gap: clamp(12px, calc(0.65vw + 10px), 36px);
+                                    .label-wrapper {
+                                        label {
+                                            font-size: clamp(20px, calc(0.65vw + 24px), 68px);
+                                        }
+                                        a {
+                                            font-size: clamp(18px, calc(0.65vw + 20px), 52px);
+                                        }
+                                    }
+                                    .input-wrapper {
+                                        input {
+                                            padding: clamp(15px, calc(0.65vw + 10px), 40px)
+                                                clamp(24px, calc(0.65vw + 12px), 56px);
+                                            font-size: clamp(20px, calc(0.65vw + 24px), 52px);
+                                            &::placeholder {
+                                                font-size: clamp(20px, calc(0.65vw + 24px), 52px);
+                                            }
+                                        }
+                                        svg {
+                                            display: none;
+                                        }
+                                    }
+                                }
+                                .password-requirements {
+                                    gap: clamp(15px, calc(0.65vw + 20px), 52px);
+                                    .requirement {
+                                        font-size: clamp(20px, calc(0.65vw + 24px), 52px);
+                                        padding-left: 66px;
+                                    }
+                                }
+                                button {
+                                    padding: clamp(15px, calc(0.65vw + 12px), 70px) clamp(24px, calc(1.04vw + 10px), 80px);
+                                    span {
+                                        font-size: clamp(20px, calc(0.65vw + 24px), 52px);
+                                    }
+                                }
+                                h6 {
+                                    font-size: clamp(18px, calc(0.65vw + 22px), 52px);
+                                    span {
+                                        font-size: clamp(18px, calc(0.52vw + 22px), 52px);
+                                    }
+                                }
+                            }
+
+                            .item-3 {
+                                gap: clamp(15px, calc(0.65vw + 20px), 52px);
+                                p {
+                                    font-size: clamp(20px, calc(0.65vw + 24px), 52px);
                                 }
                             }
                         }

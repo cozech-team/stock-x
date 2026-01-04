@@ -39,3 +39,68 @@
         }
     }
 }
+
+@media (min-width: 1600px) {
+    .theme-toggle {
+        p {
+            font-size: 16px;
+        }
+    }
+}
+@media (min-width: 1706px) {
+    .theme-toggle {
+        p {
+            font-size: 18px;
+        }
+    }
+}
+
+@media (min-width: 1920px) {
+    .theme-toggle {
+        p {
+            font-size: 20px;
+        }
+    }
+}
+@media (min-width: 2560px) {
+    .theme-toggle {
+        p {
+            font-size: 26px;
+        }
+    }
+}
+@media (min-width: 3840px) {
+    .theme-toggle {
+        p {
+            font-size: 40px;
+        }
+
+        .toggle-pill {
+            width: 64px;
+            height: 34px;
+
+            .circle {
+                width: 36px;
+                height: 36px;
+            }
+        }
+    }
+}
+@media (min-width: 5120px) {
+    .theme-toggle {
+        p {
+            font-size: 55px;
+        }
+
+        .toggle-pill {
+            width: 76px;
+            height: 40px;
+            margin: 0 10px;
+
+            .circle {
+                width: 46px;
+                height: 46px;
+            }
+        }
+    }
+}
