@@ -36,8 +36,7 @@ const SetPassword = () => {
 
     const handleResetPassword = (e) => {
         e.preventDefault();
-        // Add password reset logic here
-        router.push("/signin");
+        router.push("/password-reset");
     };
 
     return (
