@@ -372,6 +372,8 @@
 // Tablet Landscape (768px - 1024px)
 @media (min-width: 768px) and (max-width: 1024px) {
     #sign-up {
+        padding: 10px 0 30px;
+
         &::before {
             width: 1700px;
             height: 500px;
@@ -398,6 +400,7 @@
                     .content-wrapper {
                         max-width: clamp(340px, 60%, 500px);
                         padding: 8px;
+                        padding-top: 60px;
 
                         .text-items {
                             h3 {
@@ -463,7 +466,7 @@
 // Tablet Portrait / Large Mobile (481px - 767px)
 @media (min-width: 481px) and (max-width: 767px) {
     #sign-up {
-        padding: 0;
+        padding: 10px 0 30px;
 
         &::before {
             width: 1700px;
@@ -491,6 +494,7 @@
                     .content-wrapper {
                         max-width: clamp(320px, 70%, 550px);
                         padding: 0 16px;
+                        padding-top: 60px;
 
                         .text-items {
                             h3 {
@@ -570,7 +574,7 @@
 // Small Mobile (max-width: 480px)
 @media (max-width: 480px) {
     #sign-up {
-        padding: 0;
+        padding: 10px 0 30px;
         &::before {
             width: 700px;
             height: 500px;
@@ -597,6 +601,7 @@
                     .content-wrapper {
                         max-width: 100%;
                         padding: 0 12px;
+                        padding-top: 60px;
 
                         .text-items {
                             h3 {
