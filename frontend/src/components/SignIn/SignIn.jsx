@@ -2,14 +2,106 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import { signInWithEmail, signInWithGoogle, signInWithApple } from "@/services/authService";
+import { validateEmail } from "@/utils/authHelpers";
 import "./SignIn.scss";
 
 const SignIn = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+    });
+    const router = useRouter();
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+        // Clear error when user starts typing
+        if (error) setError("");
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError("");
+
+        // Validation
+        if (!formData.email || !formData.password) {
+            setError("Please fill in all fields");
+            return;
+        }
+
+        if (!validateEmail(formData.email)) {
+            setError("Please enter a valid email address");
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const result = await signInWithEmail(formData.email, formData.password);
+
+            if (result.success) {
+                // Successful sign in - redirect to home/dashboard
+                router.push("/");
+            } else {
+                // Show error message (includes approval status errors)
+                setError(result.error);
+            }
+        } catch (err) {
+            setError("An unexpected error occurred. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleGoogleSignIn = async () => {
+        setError("");
+        setLoading(true);
+
+        try {
+            const result = await signInWithGoogle();
+
+            if (result.success) {
+                router.push("/");
+            } else {
+                setError(result.error);
+            }
+        } catch (err) {
+            setError("An unexpected error occurred. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleAppleSignIn = async () => {
+        setError("");
+        setLoading(true);
+
+        try {
+            const result = await signInWithApple();
+
+            if (result.success) {
+                router.push("/");
+            } else {
+                setError(result.error);
+            }
+        } catch (err) {
+            setError("An unexpected error occurred. Please try again.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -31,13 +123,27 @@ const SignIn = () => {
                             <div className="content-items flex flex-col gap-6 w-full">
                                 <div className="item-1 flex flex-col gap-6">
                                     <div className="social-button-groups flex flex-col gap-3">
-                                        <div className="google-btn flex justify-center items-center gap-3">
+                                        <div
+                                            className="google-btn flex justify-center items-center gap-3"
+                                            onClick={handleGoogleSignIn}
+                                            style={{
+                                                cursor: loading ? "not-allowed" : "pointer",
+                                                opacity: loading ? 0.6 : 1,
+                                            }}
+                                        >
                                             <img src="/Svg/google.svg" alt="google" />
-                                            <p>Continue with Google</p>
+                                            <p>{loading ? "Signing in..." : "Continue with Google"}</p>
                                         </div>
-                                        <div className="apple-btn flex justify-center items-center gap-3">
+                                        <div
+                                            className="apple-btn flex justify-center items-center gap-3"
+                                            onClick={handleAppleSignIn}
+                                            style={{
+                                                cursor: loading ? "not-allowed" : "pointer",
+                                                opacity: loading ? 0.6 : 1,
+                                            }}
+                                        >
                                             <img src="/Svg/apple.svg" alt="apple" />
-                                            <p>Continue with Apple</p>
+                                            <p>{loading ? "Signing in..." : "Continue with Apple"}</p>
                                         </div>
                                     </div>
                                     <div className="divider flex justify-center items-center gap-2">
@@ -48,20 +154,31 @@ const SignIn = () => {
                                 </div>
 
                                 {/* ------ item-1 end ------ */}
-                                <div className="item-2 flex flex-col gap-5">
+                                <form onSubmit={handleSubmit} className="item-2 flex flex-col gap-5">
+                                    {error && <div className="error-msg">{error}</div>}
+
                                     <div className="form-group flex flex-col gap-2">
                                         <div className="label-wrapper flex justify-between">
-                                            <label htmlFor="">
+                                            <label htmlFor="email">
                                                 Email <span>*</span>
                                             </label>
                                         </div>
                                         <div className="input-wrapper">
-                                            <input type="text" name="email" placeholder="Enter your email" required />
+                                            <input
+                                                type="text"
+                                                name="email"
+                                                id="email"
+                                                placeholder="Enter your email"
+                                                value={formData.email}
+                                                onChange={handleInputChange}
+                                                disabled={loading}
+                                                required
+                                            />
                                         </div>
                                     </div>
                                     <div className="form-group flex flex-col gap-2">
                                         <div className="label-wrapper flex justify-between">
-                                            <label htmlFor="">
+                                            <label htmlFor="password">
                                                 Password <span>*</span>
                                             </label>
                                             <Link href="/forgot-password">Forgot password</Link>
@@ -70,7 +187,11 @@ const SignIn = () => {
                                             <input
                                                 type={showPassword ? "text" : "password"}
                                                 name="password"
+                                                id="password"
                                                 placeholder="Enter your password"
+                                                value={formData.password}
+                                                onChange={handleInputChange}
+                                                disabled={loading}
                                                 required
                                             />
                                             <svg
@@ -81,6 +202,7 @@ const SignIn = () => {
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 xmlns="http://www.w3.org/2000/svg"
+                                                style={{ cursor: "pointer" }}
                                             >
                                                 {showPassword ? (
                                                     // Eye icon (visible)
@@ -120,8 +242,14 @@ const SignIn = () => {
                                             </svg>
                                         </div>
                                     </div>
-                                    <button type="submit">
-                                        <span data-text="Sign in">Sign in</span>
+                                    <button
+                                        type="submit"
+                                        disabled={loading}
+                                        style={{ cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.7 : 1 }}
+                                    >
+                                        <span data-text={loading ? "Signing in..." : "Sign in"}>
+                                            {loading ? "Signing in..." : "Sign in"}
+                                        </span>
                                     </button>
                                     <h6>
                                         Don't have an account?{" "}
@@ -129,7 +257,7 @@ const SignIn = () => {
                                             <Link href="/signup">Sign Up</Link>
                                         </span>
                                     </h6>
-                                </div>
+                                </form>
                                 {/* ------ item-2 end ------ */}
                                 <div className="item-3 flex flex-col gap-2">
                                     <div className="divider"></div>

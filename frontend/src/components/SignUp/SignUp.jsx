@@ -2,13 +2,24 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import { signUpWithEmail, signInWithGoogle, signInWithApple } from "@/services/authService";
+import { validateEmail, isPasswordValid } from "@/utils/authHelpers";
 import "./SignUp.scss";
 
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState(false);
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        phone: "",
+    });
+    const router = useRouter();
 
     // Password validation criteria
     const [passwordCriteria, setPasswordCriteria] = useState({
@@ -22,6 +33,16 @@ const SignUp = () => {
         setShowPassword(!showPassword);
     };
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+        // Clear error when user starts typing
+        if (error) setError("");
+    };
+
     // Validate password on change
     const handlePasswordChange = (e) => {
         const value = e.target.value;
@@ -33,6 +54,102 @@ const SignUp = () => {
             hasNumber: /\d/.test(value),
             hasCapital: /[A-Z]/.test(value),
         });
+
+        // Clear error when user starts typing
+        if (error) setError("");
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError("");
+        setSuccess(false);
+
+        // Validation
+        if (!formData.name || !formData.email || !formData.phone || !password) {
+            setError("Please fill in all fields");
+            return;
+        }
+
+        if (!validateEmail(formData.email)) {
+            setError("Please enter a valid email address");
+            return;
+        }
+
+        if (!isPasswordValid(password)) {
+            setError("Password must meet all requirements");
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const result = await signUpWithEmail(formData.email, password, formData.name, formData.phone);
+
+            if (result.success) {
+                // Show success message
+                setSuccess(true);
+                setError("");
+                // Clear form
+                setFormData({ name: "", email: "", phone: "" });
+                setPassword("");
+                setPasswordCriteria({
+                    minLength: false,
+                    hasSpecialChar: false,
+                    hasNumber: false,
+                    hasCapital: false,
+                });
+            } else {
+                setError(result.error);
+            }
+        } catch (err) {
+            setError("An unexpected error occurred. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleGoogleSignUp = async () => {
+        setError("");
+        setSuccess(false);
+        setLoading(true);
+
+        try {
+            const result = await signInWithGoogle();
+
+            if (result.success) {
+                router.push("/");
+            } else {
+                // This will be the pending approval message for new users
+                setSuccess(true);
+                setError("");
+            }
+        } catch (err) {
+            setError("An unexpected error occurred. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleAppleSignUp = async () => {
+        setError("");
+        setSuccess(false);
+        setLoading(true);
+
+        try {
+            const result = await signInWithApple();
+
+            if (result.success) {
+                router.push("/");
+            } else {
+                // This will be the pending approval message for new users
+                setSuccess(true);
+                setError("");
+            }
+        } catch (err) {
+            setError("An unexpected error occurred. Please try again.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -54,13 +171,27 @@ const SignUp = () => {
                             <div className="content-items flex flex-col gap-6 w-full">
                                 <div className="item-1 flex flex-col gap-6">
                                     <div className="social-button-groups flex flex-col gap-3">
-                                        <div className="google-btn flex justify-center items-center gap-3">
+                                        <div
+                                            className="google-btn flex justify-center items-center gap-3"
+                                            onClick={handleGoogleSignUp}
+                                            style={{
+                                                cursor: loading ? "not-allowed" : "pointer",
+                                                opacity: loading ? 0.6 : 1,
+                                            }}
+                                        >
                                             <img src="/Svg/google.svg" alt="google" />
-                                            <p className="btn-text">Continue with Google</p>
+                                            <p className="btn-text">{loading ? "Signing up..." : "Continue with Google"}</p>
                                         </div>
-                                        <div className="apple-btn flex justify-center items-center gap-3">
+                                        <div
+                                            className="apple-btn flex justify-center items-center gap-3"
+                                            onClick={handleAppleSignUp}
+                                            style={{
+                                                cursor: loading ? "not-allowed" : "pointer",
+                                                opacity: loading ? 0.6 : 1,
+                                            }}
+                                        >
                                             <img src="/Svg/apple.svg" alt="apple" />
-                                            <p className="btn-text">Continue with Apple</p>
+                                            <p className="btn-text">{loading ? "Signing up..." : "Continue with Apple"}</p>
                                         </div>
                                     </div>
                                     <div className="divider flex justify-center items-center gap-2">
@@ -71,40 +202,76 @@ const SignUp = () => {
                                 </div>
 
                                 {/* ------ item-1 end ------ */}
-                                <div className="item-2 flex flex-col gap-5">
+                                <form onSubmit={handleSubmit} className="item-2 flex flex-col gap-5">
+                                    {error && <div className="error-msg">{error}</div>}
+
+                                    {success && (
+                                        <div className="success-msg">
+                                            🎉 Account created successfully! Your account is pending admin approval. You'll
+                                            be able to sign in once an admin approves your account.
+                                        </div>
+                                    )}
+
                                     <div className="form-group flex flex-col gap-2">
                                         <div className="label-wrapper flex justify-between">
-                                            <label htmlFor="">
+                                            <label htmlFor="name">
                                                 Name <span>*</span>
                                             </label>
                                         </div>
                                         <div className="input-wrapper">
-                                            <input type="text" name="name" placeholder="Enter your name" required />
+                                            <input
+                                                type="text"
+                                                name="name"
+                                                id="name"
+                                                placeholder="Enter your name"
+                                                value={formData.name}
+                                                onChange={handleInputChange}
+                                                disabled={loading}
+                                                required
+                                            />
                                         </div>
                                     </div>
                                     <div className="form-group flex flex-col gap-2">
                                         <div className="label-wrapper flex justify-between">
-                                            <label htmlFor="">
+                                            <label htmlFor="email">
                                                 Email <span>*</span>
                                             </label>
                                         </div>
                                         <div className="input-wrapper">
-                                            <input type="email" name="email" placeholder="Enter your email" required />
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                id="email"
+                                                placeholder="Enter your email"
+                                                value={formData.email}
+                                                onChange={handleInputChange}
+                                                disabled={loading}
+                                                required
+                                            />
                                         </div>
                                     </div>
                                     <div className="form-group flex flex-col gap-2">
                                         <div className="label-wrapper flex justify-between">
-                                            <label htmlFor="">
+                                            <label htmlFor="phone">
                                                 Phone number <span>*</span>
                                             </label>
                                         </div>
                                         <div className="input-wrapper">
-                                            <input type="tel" name="phone" placeholder="Enter your phone number" required />
+                                            <input
+                                                type="tel"
+                                                name="phone"
+                                                id="phone"
+                                                placeholder="Enter your phone number"
+                                                value={formData.phone}
+                                                onChange={handleInputChange}
+                                                disabled={loading}
+                                                required
+                                            />
                                         </div>
                                     </div>
                                     <div className="form-group flex flex-col gap-2">
                                         <div className="label-wrapper flex justify-between">
-                                            <label htmlFor="">
+                                            <label htmlFor="password">
                                                 Password <span>*</span>
                                             </label>
                                         </div>
@@ -112,9 +279,11 @@ const SignUp = () => {
                                             <input
                                                 type={showPassword ? "text" : "password"}
                                                 name="password"
+                                                id="password"
                                                 placeholder="Create a password"
                                                 value={password}
                                                 onChange={handlePasswordChange}
+                                                disabled={loading}
                                                 required
                                             />
                                             <svg
@@ -125,6 +294,7 @@ const SignUp = () => {
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 xmlns="http://www.w3.org/2000/svg"
+                                                style={{ cursor: "pointer" }}
                                             >
                                                 {showPassword ? (
                                                     // Eye icon (visible)
@@ -178,8 +348,14 @@ const SignUp = () => {
                                             Must contain one capital letter
                                         </p>
                                     </div>
-                                    <button type="submit">
-                                        <span data-text="Create account">Create account</span>
+                                    <button
+                                        type="submit"
+                                        disabled={loading}
+                                        style={{ cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.7 : 1 }}
+                                    >
+                                        <span data-text={loading ? "Creating account..." : "Create account"}>
+                                            {loading ? "Creating account..." : "Create account"}
+                                        </span>
                                     </button>
                                     <h6>
                                         Already have an account?{" "}
@@ -187,7 +363,7 @@ const SignUp = () => {
                                             <Link href="/signin">Sign in</Link>
                                         </span>
                                     </h6>
-                                </div>
+                                </form>
                                 {/* ------ item-2 end ------ */}
                                 <div className="item-3 flex flex-col gap-2">
                                     <div className="divider"></div>

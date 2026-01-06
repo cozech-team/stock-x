@@ -1,16 +1,57 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { sendPasswordReset } from "@/services/authService";
+import { validateEmail } from "@/utils/authHelpers";
 import "./ForgotPassword.scss";
 
 const ForgotPassword = () => {
     const router = useRouter();
+    const [email, setEmail] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
-    const handleForgotPassword = () => {
-        router.push("/check-email");
+    const handleForgotPassword = async (e) => {
+        e.preventDefault();
+        setError("");
+
+        // Validation
+        if (!email) {
+            setError("Please enter your email address");
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            setError("Please enter a valid email address");
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const result = await sendPasswordReset(email);
+
+            if (result.success) {
+                // Navigate to check email page on success
+                router.push("/check-email");
+            } else {
+                setError(result.error);
+            }
+        } catch (err) {
+            setError("An unexpected error occurred. Please try again.");
+        } finally {
+            setLoading(false);
+        }
     };
+
+    const handleInputChange = (e) => {
+        setEmail(e.target.value);
+        // Clear error when user starts typing
+        if (error) setError("");
+    };
+
     return (
         <div id="forgot-password" className="forgot-password">
             <div className="container min-h-screen w-full mx-auto flex justify-center items-center ">
@@ -24,24 +65,44 @@ const ForgotPassword = () => {
                         </div>
                         <div className="header-text-content flex flex-col items-center justify-center gap-3">
                             <h2>Forgot Password</h2>
-                            <p>No worries, we’ll send you reset instructions.</p>
+                            <p>No worries, we'll send you reset instructions.</p>
                         </div>
                     </div>
-                    <div className="item-2 flex flex-col items-center justify-center gap-6 w-full">
+                    <form
+                        onSubmit={handleForgotPassword}
+                        className="item-2 flex flex-col items-center justify-center gap-6 w-full"
+                    >
+                        {error && <div className="error-msg">{error}</div>}
+
                         <div className="form w-full">
                             <div className="form-group flex flex-col items-start justify-center gap-2">
                                 <label htmlFor="email">
                                     Email <span>*</span>
                                 </label>
-                                <input type="email" id="email" name="email" placeholder="Enter your email" required />
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder="Enter your email"
+                                    value={email}
+                                    onChange={handleInputChange}
+                                    disabled={loading}
+                                    required
+                                />
                             </div>
                         </div>
                         <div className="button w-full">
-                            <button type="submit" onClick={handleForgotPassword}>
-                                <span data-text="Reset Password">Reset Password</span>
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                style={{ cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.7 : 1 }}
+                            >
+                                <span data-text={loading ? "Sending..." : "Reset Password"}>
+                                    {loading ? "Sending..." : "Reset Password"}
+                                </span>
                             </button>
                         </div>
-                    </div>
+                    </form>
                     <div className="item-3">
                         <div className="back-nav flex items-center justify-center gap-2">
                             <div className="icon">

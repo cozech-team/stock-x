@@ -141,6 +141,41 @@
                             }
                         }
                         .item-2 {
+                            .error-msg {
+                                padding: 12px 16px;
+                                background-color: rgba(239, 68, 68, 0.1);
+                                border: 1px solid rgba(239, 68, 68, 0.3);
+                                border-radius: 8px;
+                                color: var(--accent-color);
+                                font-size: 14px;
+                                font-weight: 500;
+                                line-height: 1.5;
+                                animation: slideDown 0.3s ease-out;
+                            }
+
+                            .success-msg {
+                                padding: 12px 16px;
+                                background-color: rgba(34, 197, 94, 0.1);
+                                border: 1px solid rgba(34, 197, 94, 0.3);
+                                border-radius: 8px;
+                                color: #22c55e;
+                                font-size: 14px;
+                                font-weight: 500;
+                                line-height: 1.5;
+                                animation: slideDown 0.3s ease-out;
+                            }
+
+                            @keyframes slideDown {
+                                from {
+                                    opacity: 0;
+                                    transform: translateY(-10px);
+                                }
+                                to {
+                                    opacity: 1;
+                                    transform: translateY(0);
+                                }
+                            }
+
                             .form-group {
                                 user-select: none;
                                 .label-wrapper {
@@ -434,6 +469,18 @@
                             }
 
                             .item-2 {
+                                .error-msg {
+                                    padding: 11px 15px;
+                                    font-size: 15px;
+                                    border-radius: 8px;
+                                }
+
+                                .success-msg {
+                                    padding: 11px 15px;
+                                    font-size: 15px;
+                                    border-radius: 8px;
+                                }
+
                                 .form-group {
                                     .input-wrapper {
                                         input {
@@ -528,6 +575,18 @@
                             }
 
                             .item-2 {
+                                .error-msg {
+                                    padding: 11px 15px;
+                                    font-size: 15px;
+                                    border-radius: 8px;
+                                }
+
+                                .success-msg {
+                                    padding: 11px 15px;
+                                    font-size: 15px;
+                                    border-radius: 8px;
+                                }
+
                                 .form-group {
                                     .input-wrapper {
                                         input {
@@ -637,6 +696,18 @@
                             }
 
                             .item-2 {
+                                .error-msg {
+                                    padding: 10px 14px;
+                                    font-size: 13px;
+                                    border-radius: 6px;
+                                }
+
+                                .success-msg {
+                                    padding: 10px 14px;
+                                    font-size: 13px;
+                                    border-radius: 6px;
+                                }
+
                                 .form-group {
                                     .label-wrapper {
                                         label {
@@ -782,6 +853,19 @@
                             }
                             .item-2 {
                                 gap: clamp(20px, 1.82vw, 48px);
+
+                                .error-msg {
+                                    padding: clamp(12px, calc(0.52vw + 8px), 18px) clamp(16px, calc(0.78vw + 10px), 24px);
+                                    font-size: clamp(14px, calc(0.39vw + 10px), 20px);
+                                    border-radius: clamp(8px, calc(0.26vw + 6px), 12px);
+                                }
+
+                                .success-msg {
+                                    padding: clamp(12px, calc(0.52vw + 8px), 18px) clamp(16px, calc(0.78vw + 10px), 24px);
+                                    font-size: clamp(14px, calc(0.39vw + 10px), 20px);
+                                    border-radius: clamp(8px, calc(0.26vw + 6px), 12px);
+                                }
+
                                 .form-group {
                                     gap: clamp(8px, calc(0.52vw + 2px), 16px);
                                     .label-wrapper {
@@ -885,6 +969,19 @@
                             }
                             .item-2 {
                                 gap: clamp(20px, 2.82vw, 48px);
+
+                                .error-msg {
+                                    padding: clamp(12px, calc(0.52vw + 12px), 24px) clamp(16px, calc(0.78vw + 12px), 26px);
+                                    font-size: clamp(14px, calc(0.39vw + 16px), 32px);
+                                    border-radius: clamp(8px, calc(0.26vw + 8px), 14px);
+                                }
+
+                                .success-msg {
+                                    padding: clamp(12px, calc(0.52vw + 12px), 24px) clamp(16px, calc(0.78vw + 12px), 26px);
+                                    font-size: clamp(14px, calc(0.39vw + 16px), 32px);
+                                    border-radius: clamp(8px, calc(0.26vw + 8px), 14px);
+                                }
+
                                 .form-group {
                                     gap: clamp(8px, calc(0.52vw + 6px), 16px);
                                     .label-wrapper {
@@ -996,6 +1093,19 @@
                             }
                             .item-2 {
                                 gap: clamp(20px, 2.82vw, 48px);
+
+                                .error-msg {
+                                    padding: clamp(12px, calc(0.52vw + 18px), 34px) clamp(16px, calc(0.78vw + 12px), 26px);
+                                    font-size: clamp(14px, calc(0.49vw + 18px), 44px);
+                                    border-radius: clamp(8px, calc(0.26vw + 8px), 16px);
+                                }
+
+                                .success-msg {
+                                    padding: clamp(12px, calc(0.52vw + 18px), 34px) clamp(16px, calc(0.78vw + 12px), 26px);
+                                    font-size: clamp(14px, calc(0.49vw + 22px), 52px);
+                                    border-radius: clamp(8px, calc(0.26vw + 8px), 16px);
+                                }
+
                                 .form-group {
                                     gap: clamp(8px, calc(0.52vw + 6px), 16px);
                                     .label-wrapper {
@@ -1110,6 +1220,19 @@
                             }
                             .item-2 {
                                 gap: clamp(20px, 2.82vw, 68px);
+
+                                .error-msg {
+                                    padding: clamp(12px, calc(0.58vw + 22px), 40px) clamp(16px, calc(0.78vw + 12px), 26px);
+                                    font-size: clamp(14px, calc(0.49vw + 26px), 58px);
+                                    border-radius: clamp(8px, calc(0.36vw + 12px), 20px);
+                                }
+
+                                .success-msg {
+                                    padding: clamp(12px, calc(0.58vw + 22px), 40px) clamp(16px, calc(0.78vw + 12px), 26px);
+                                    font-size: clamp(14px, calc(0.49vw + 26px), 58px);
+                                    border-radius: clamp(8px, calc(0.36vw + 12px), 20px);
+                                }
+
                                 .form-group {
                                     gap: clamp(8px, calc(0.65vw + 6px), 26px);
                                     .label-wrapper {
@@ -1226,6 +1349,19 @@
                             }
                             .item-2 {
                                 gap: clamp(32px, 2.82vw, 92px);
+
+                                .error-msg {
+                                    padding: clamp(12px, calc(0.58vw + 22px), 40px) clamp(16px, calc(0.78vw + 12px), 26px);
+                                    font-size: clamp(14px, calc(0.49vw + 26px), 58px);
+                                    border-radius: clamp(8px, calc(0.36vw + 12px), 20px);
+                                }
+
+                                .success-msg {
+                                    padding: clamp(12px, calc(0.58vw + 22px), 40px) clamp(16px, calc(0.78vw + 12px), 26px);
+                                    font-size: clamp(14px, calc(0.49vw + 26px), 58px);
+                                    border-radius: clamp(8px, calc(0.36vw + 12px), 20px);
+                                }
+
                                 .form-group {
                                     gap: clamp(12px, calc(0.65vw + 10px), 36px);
                                     .label-wrapper {
