@@ -31,11 +31,15 @@ const ForgotPassword = () => {
         setLoading(true);
 
         try {
-            const result = await sendPasswordReset(email);
+            // Get the base URL (e.g., http://localhost:3000)
+            const baseUrl = window.location.origin;
+            const redirectUrl = `${baseUrl}/set-password`;
+
+            const result = await sendPasswordReset(email, redirectUrl);
 
             if (result.success) {
-                // Navigate to check email page on success
-                router.push("/check-email");
+                // Navigate to check email page on success with email as query param
+                router.push(`/check-email?email=${encodeURIComponent(email)}`);
             } else {
                 setError(result.error);
             }

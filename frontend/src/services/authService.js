@@ -8,9 +8,10 @@ import {
     confirmPasswordReset as firebaseConfirmPasswordReset,
     signOut as firebaseSignOut,
     updateProfile,
+    fetchSignInMethodsForEmail,
 } from "firebase/auth";
 import { auth } from "../lib/firebase";
-import { createUserProfile, getUserProfile, updateLastLogin } from "./userService";
+import { createUserProfile, getUserProfile, updateLastLogin, getUserByEmail } from "./userService";
 
 // Initialize providers
 const googleProvider = new GoogleAuthProvider();
@@ -235,15 +236,24 @@ export const signInWithApple = async () => {
 };
 
 /**
- * Send password reset email
+ * Send password reset email with optional redirect settings
  */
-export const sendPasswordReset = async (email) => {
+export const sendPasswordReset = async (email, redirectUrl = null) => {
     try {
-        await firebaseSendPasswordResetEmail(auth, email);
+        const actionCodeSettings = redirectUrl
+            ? {
+                  url: redirectUrl,
+                  handleCodeInApp: true,
+              }
+            : null;
+
+        await firebaseSendPasswordResetEmail(auth, email, actionCodeSettings);
         return {
             success: true,
         };
     } catch (error) {
+        console.error("Password reset error:", error);
+
         return {
             success: false,
             error: formatAuthError(error),

@@ -23,7 +23,7 @@ export const createUserProfile = async (uid, userData) => {
         const userRef = doc(db, USERS_COLLECTION, uid);
         await setDoc(userRef, {
             uid,
-            email: userData.email,
+            email: userData.email.toLowerCase(), // Store email in lowercase for consistent querying
             displayName: userData.displayName || "",
             phoneNumber: userData.phoneNumber || "",
             role: "user", // Default role
@@ -59,6 +59,30 @@ export const getUserProfile = async (uid) => {
         }
     } catch (error) {
         console.error("Error getting user profile:", error);
+        return { success: false, error: error.message };
+    }
+};
+
+/**
+ * Get user by email from Firestore
+ */
+export const getUserByEmail = async (email) => {
+    try {
+        // Normalize email: trim whitespace and convert to lowercase
+        const normalizedEmail = email.trim().toLowerCase();
+
+        const usersRef = collection(db, USERS_COLLECTION);
+        const q = query(usersRef, where("email", "==", normalizedEmail));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            const userDoc = querySnapshot.docs[0];
+            return { success: true, data: userDoc.data() };
+        } else {
+            return { success: false, error: "User not found" };
+        }
+    } catch (error) {
+        console.error("Error getting user by email:", error);
         return { success: false, error: error.message };
     }
 };

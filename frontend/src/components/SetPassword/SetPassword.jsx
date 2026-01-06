@@ -1,16 +1,22 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { resetPassword } from "@/services/authService";
+import { isPasswordValid } from "@/utils/authHelpers";
 import "./SetPassword.scss";
 
 const SetPassword = () => {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const [oobCode, setOobCode] = useState("");
 
     const [requirements, setRequirements] = useState({
         minLength: false,
@@ -18,6 +24,16 @@ const SetPassword = () => {
         hasNumber: false,
         hasCapital: false,
     });
+
+    // Extract reset code from URL on component mount
+    useEffect(() => {
+        const code = searchParams.get("oobCode");
+        if (!code) {
+            setError("Invalid or missing reset code. Please request a new password reset.");
+        } else {
+            setOobCode(code);
+        }
+    }, [searchParams]);
 
     const validatePassword = (value) => {
         setRequirements({
@@ -32,11 +48,57 @@ const SetPassword = () => {
         const value = e.target.value;
         setPassword(value);
         validatePassword(value);
+        // Clear error when user starts typing
+        if (error) setError("");
     };
 
-    const handleResetPassword = (e) => {
+    const handleConfirmPasswordChange = (e) => {
+        setConfirmPassword(e.target.value);
+        // Clear error when user starts typing
+        if (error) setError("");
+    };
+
+    const handleResetPassword = async (e) => {
         e.preventDefault();
-        router.push("/password-reset");
+        setError("");
+
+        // Validation
+        if (!oobCode) {
+            setError("Invalid or missing reset code. Please request a new password reset.");
+            return;
+        }
+
+        if (!password || !confirmPassword) {
+            setError("Please fill in all fields");
+            return;
+        }
+
+        if (!isPasswordValid(password)) {
+            setError("Password must meet all requirements");
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            setError("Passwords do not match");
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const result = await resetPassword(oobCode, password);
+
+            if (result.success) {
+                // Navigate to password reset success page
+                router.push("/password-reset");
+            } else {
+                setError(result.error);
+            }
+        } catch (err) {
+            setError("An unexpected error occurred. Please try again.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -55,8 +117,13 @@ const SetPassword = () => {
                             <p>Your new password must be different to previously used passwords.</p>
                         </div>
                     </div>
-                    <div className="item-2 flex flex-col items-center justify-center gap-6 w-full">
-                        <form className="form w-full" onSubmit={handleResetPassword}>
+                    <form
+                        onSubmit={handleResetPassword}
+                        className="item-2 flex flex-col items-center justify-center gap-6 w-full"
+                    >
+                        {error && <div className="error-msg">{error}</div>}
+
+                        <div className="form w-full">
                             <div className="form-group flex flex-col items-start justify-center gap-2">
                                 <label htmlFor="password">
                                     Password <span>*</span>
@@ -69,6 +136,7 @@ const SetPassword = () => {
                                         placeholder="••••••••"
                                         value={password}
                                         onChange={handlePasswordChange}
+                                        disabled={loading || !oobCode}
                                         required
                                     />
                                     <svg
@@ -79,6 +147,7 @@ const SetPassword = () => {
                                         viewBox="0 0 20 20"
                                         fill="none"
                                         xmlns="http://www.w3.org/2000/svg"
+                                        style={{ cursor: "pointer" }}
                                     >
                                         {showPassword ? (
                                             <>
@@ -129,7 +198,8 @@ const SetPassword = () => {
                                         name="confirm-password"
                                         placeholder="••••••••"
                                         value={confirmPassword}
-                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        onChange={handleConfirmPasswordChange}
+                                        disabled={loading || !oobCode}
                                         required
                                     />
                                     <svg
@@ -140,6 +210,7 @@ const SetPassword = () => {
                                         viewBox="0 0 20 20"
                                         fill="none"
                                         xmlns="http://www.w3.org/2000/svg"
+                                        style={{ cursor: "pointer" }}
                                     >
                                         {showConfirmPassword ? (
                                             <>
@@ -194,12 +265,21 @@ const SetPassword = () => {
                                 </p>
                             </div>
                             <div className="button w-full">
-                                <button type="submit">
-                                    <span data-text="Reset password">Reset password</span>
+                                <button
+                                    type="submit"
+                                    disabled={loading || !oobCode}
+                                    style={{
+                                        cursor: loading || !oobCode ? "not-allowed" : "pointer",
+                                        opacity: loading || !oobCode ? 0.7 : 1,
+                                    }}
+                                >
+                                    <span data-text={loading ? "Resetting..." : "Reset password"}>
+                                        {loading ? "Resetting..." : "Reset password"}
+                                    </span>
                                 </button>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                     <div className="item-3">
                         <div className="back-nav flex items-center justify-center gap-2">
                             <div className="icon">

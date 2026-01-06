@@ -1,14 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import "./CheckEmail.scss";
-import { useRouter } from "next/navigation";
-const CheckEmail = () => {
-    const router = useRouter();
+
+const CheckEmailContent = () => {
+    const searchParams = useSearchParams();
+    const email = searchParams.get("email") || "user@stock-x.com";
+
     const handleOpenEmailApp = () => {
-        router.push("/set-password");
+        // Open Gmail in a new tab
+        window.open("https://mail.google.com/", "_blank");
     };
+
     return (
         <div id="check-email" className="check-email">
             <div className="container min-h-screen w-full mx-auto flex justify-center items-center ">
@@ -22,7 +27,9 @@ const CheckEmail = () => {
                         </div>
                         <div className="header-text-content flex flex-col items-center justify-center gap-3">
                             <h2>Check your email</h2>
-                            <p>We sent a password reset link to user@stock-x.com</p>
+                            <p>
+                                We sent a password reset link to <strong>{email}</strong>
+                            </p>
                         </div>
                     </div>
                     <div className="item-2 flex flex-col items-center justify-center gap-6 w-full">
@@ -48,6 +55,14 @@ const CheckEmail = () => {
                 </div>
             </div>
         </div>
+    );
+};
+
+const CheckEmail = () => {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <CheckEmailContent />
+        </Suspense>
     );
 };
 
