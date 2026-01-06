@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { resetPassword } from "@/services/authService";
 import { isPasswordValid } from "@/utils/authHelpers";
 import "./SetPassword.scss";
 
-const SetPassword = () => {
+const SetPasswordContent = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [password, setPassword] = useState("");
@@ -291,6 +291,14 @@ const SetPassword = () => {
                 </div>
             </div>
         </div>
+    );
+};
+
+const SetPassword = () => {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <SetPasswordContent />
+        </Suspense>
     );
 };
 
