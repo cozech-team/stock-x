@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import { signInWithEmail, signInWithGoogle, signInWithApple } from "@/services/authService";
+import Spinner from "../Spinner/Spinner";
 import { validateEmail } from "@/utils/authHelpers";
 import "./SignIn.scss";
 
@@ -247,8 +248,8 @@ const SignIn = () => {
                                         disabled={loading}
                                         style={{ cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.7 : 1 }}
                                     >
-                                        <span data-text={loading ? "Signing in..." : "Sign in"}>
-                                            {loading ? "Signing in..." : "Sign in"}
+                                        <span data-text={loading ? "" : "Sign in"}>
+                                            {loading ? <Spinner size="sm" /> : "Sign in"}
                                         </span>
                                     </button>
                                     <h6>

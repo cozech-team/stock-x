@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { sendPasswordReset } from "@/services/authService";
 import { validateEmail } from "@/utils/authHelpers";
+import Spinner from "../Spinner/Spinner";
 import "./ForgotPassword.scss";
 
 const ForgotPassword = () => {
@@ -101,8 +102,8 @@ const ForgotPassword = () => {
                                 disabled={loading}
                                 style={{ cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.7 : 1 }}
                             >
-                                <span data-text={loading ? "Sending..." : "Reset Password"}>
-                                    {loading ? "Sending..." : "Reset Password"}
+                                <span data-text={loading ? "" : "Reset Password"}>
+                                    {loading ? <Spinner size="sm" /> : "Reset Password"}
                                 </span>
                             </button>
                         </div>

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import { signUpWithEmail, signInWithGoogle, signInWithApple } from "@/services/authService";
 import { validateEmail, isPasswordValid } from "@/utils/authHelpers";
+import Spinner from "../Spinner/Spinner";
 import "./SignUp.scss";
 
 const SignUp = () => {
@@ -353,8 +354,8 @@ const SignUp = () => {
                                         disabled={loading}
                                         style={{ cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.7 : 1 }}
                                     >
-                                        <span data-text={loading ? "Creating account..." : "Create account"}>
-                                            {loading ? "Creating account..." : "Create account"}
+                                        <span data-text={loading ? "" : "Create account"}>
+                                            {loading ? <Spinner size="sm" /> : "Create account"}
                                         </span>
                                     </button>
                                     <h6>

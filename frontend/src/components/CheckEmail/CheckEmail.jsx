@@ -3,6 +3,7 @@
 import React, { Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import Spinner from "../Spinner/Spinner";
 import "./CheckEmail.scss";
 
 const CheckEmailContent = () => {
@@ -60,7 +61,7 @@ const CheckEmailContent = () => {
 
 const CheckEmail = () => {
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Spinner size="lg" color="gold" className="full-page" />}>
             <CheckEmailContent />
         </Suspense>
     );

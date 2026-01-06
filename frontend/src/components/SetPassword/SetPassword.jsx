@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { resetPassword } from "@/services/authService";
 import { isPasswordValid } from "@/utils/authHelpers";
+import Spinner from "../Spinner/Spinner";
 import "./SetPassword.scss";
 
 const SetPasswordContent = () => {
@@ -273,8 +274,8 @@ const SetPasswordContent = () => {
                                         opacity: loading || !oobCode ? 0.7 : 1,
                                     }}
                                 >
-                                    <span data-text={loading ? "Resetting..." : "Reset password"}>
-                                        {loading ? "Resetting..." : "Reset password"}
+                                    <span data-text={loading ? "" : "Reset password"}>
+                                        {loading ? <Spinner size="sm" /> : "Reset password"}
                                     </span>
                                 </button>
                             </div>
@@ -296,7 +297,7 @@ const SetPasswordContent = () => {
 
 const SetPassword = () => {
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Spinner size="lg" color="gold" className="full-page" />}>
             <SetPasswordContent />
         </Suspense>
     );
