@@ -54,8 +54,12 @@ const SignIn = () => {
             const result = await signInWithEmail(formData.email, formData.password);
 
             if (result.success) {
-                // Successful sign in - redirect to home/dashboard
-                router.push("/");
+                // Redirect based on role
+                if (result.profile?.role === "admin") {
+                    router.push("/admin");
+                } else {
+                    router.push("/");
+                }
             } else {
                 // Show error message (includes approval status errors)
                 setError(result.error);
@@ -75,7 +79,11 @@ const SignIn = () => {
             const result = await signInWithGoogle();
 
             if (result.success) {
-                router.push("/");
+                if (result.profile?.role === "admin") {
+                    router.push("/admin");
+                } else {
+                    router.push("/");
+                }
             } else {
                 setError(result.error);
             }
@@ -94,7 +102,11 @@ const SignIn = () => {
             const result = await signInWithApple();
 
             if (result.success) {
-                router.push("/");
+                if (result.profile?.role === "admin") {
+                    router.push("/admin");
+                } else {
+                    router.push("/");
+                }
             } else {
                 setError(result.error);
             }

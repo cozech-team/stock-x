@@ -116,12 +116,16 @@ export const signInWithEmail = async (email, password) => {
             };
         }
 
+        // Get profile to return role
+        const profileResult = await getUserProfile(userCredential.user.uid);
+
         // Update last login
         await updateLastLogin(userCredential.user.uid);
 
         return {
             success: true,
             user: userCredential.user,
+            profile: profileResult.data,
         };
     } catch (error) {
         return {
@@ -174,6 +178,7 @@ export const signInWithGoogle = async () => {
         return {
             success: true,
             user: result.user,
+            profile: profileResult.data,
         };
     } catch (error) {
         return {
@@ -226,6 +231,7 @@ export const signInWithApple = async () => {
         return {
             success: true,
             user: result.user,
+            profile: profileResult.data,
         };
     } catch (error) {
         return {

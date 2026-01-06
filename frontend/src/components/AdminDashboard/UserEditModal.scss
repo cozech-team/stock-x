@@ -1,0 +1,161 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-container {
+    background: var(--primary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    animation: modal-spin 0.3s ease-out;
+}
+
+@keyframes modal-spin {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.modal-header {
+    padding: 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2 {
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin: 0;
+    }
+
+    .close-btn {
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        font-size: 28px;
+        cursor: pointer;
+        line-height: 1;
+        transition: color 0.2s;
+
+        &:hover {
+            color: var(--accent-color-2);
+        }
+    }
+}
+
+.modal-form {
+    padding: 24px;
+
+    .error-banner {
+        background: rgba(231, 76, 60, 0.1);
+        border: 1px solid #e74c3c;
+        color: #e74c3c;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        input,
+        select {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            color: var(--primary-color);
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+
+            &:focus {
+                border-color: var(--accent-color-2);
+            }
+        }
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 32px;
+
+        button {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.05);
+                color: var(--primary-color);
+            }
+        }
+
+        .btn-save {
+            background: var(--accent-color-2);
+            border: none;
+            color: var(--secondary-color);
+            min-width: 140px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+
+            &:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+                transform: none;
+            }
+        }
+    }
+}
