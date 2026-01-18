@@ -35,7 +35,13 @@ const AdminDashboard = () => {
         setIsRefreshing(true);
         const result = await getAllUsers();
         if (result.success) {
-            setUsers(result.data);
+            // Sort users by createdAt timestamp (newest first)
+            const sortedUsers = result.data.sort((a, b) => {
+                const dateA = a.createdAt?.toDate?.() || new Date(a.createdAt || 0);
+                const dateB = b.createdAt?.toDate?.() || new Date(b.createdAt || 0);
+                return dateB - dateA; // Descending order (newest first)
+            });
+            setUsers(sortedUsers);
             setError("");
         } else {
             setError(result.error);

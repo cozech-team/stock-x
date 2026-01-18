@@ -51,7 +51,9 @@
     --spacing-6xl: 36px;
 
     /* Smooth theme transition */
-    transition: background 0.5s ease, color 0.5s ease;
+    transition:
+        background 0.5s ease,
+        color 0.5s ease;
 }
 
 /* =========================
@@ -61,19 +63,19 @@
 [data-theme="light"] {
     /* background */
     --primary-bg: radial-gradient(circle, #004bbb, #06428e, #133095);
-    --input-bg: #ffffff1a;
+    --input-bg: rgba(255, 255, 255, 0.15);
     --auth-style-bg: #38abbf;
 
     /* colors */
-    --input-color: #a4c3ff;
+    --input-color: #e0edff;
     --primary-color: #ffffff;
     --primary-lighter-color: #fffefc;
     --secondary-color: #050f3d;
     --ternary-color: #2454b5;
     --accent-color: #c9a44c;
-    --accent-color-2: #a5fff3;
-    --text-muted: #a4c3ff;
-    --border-color: #a4c3ff;
+    --accent-color-2: #00e5cc;
+    --text-muted: #c5d9ff;
+    --border-color: rgba(255, 255, 255, 0.25);
     --selection-color: #050f3d;
 }
 
@@ -93,12 +95,19 @@ body {
     background: var(--primary-bg);
     color: var(--primary-color);
     font-family: inherit;
-    transition: background 0.5s ease, color 0.5s ease;
+    transition:
+        background 0.5s ease,
+        color 0.5s ease;
 }
 
 /* Smooth transitions for all theme-dependent properties */
 * {
-    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, fill 0.4s ease,
+    transition:
+        background-color 0.4s ease,
+        color 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease,
+        fill 0.4s ease,
         stroke 0.4s ease;
 }
 
@@ -108,8 +117,13 @@ a,
 input,
 textarea,
 select {
-    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, transform 0.3s ease,
-        box-shadow 0.3s ease, opacity 0.3s ease;
+    transition:
+        background-color 0.4s ease,
+        color 0.4s ease,
+        border-color 0.4s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        opacity 0.3s ease;
 }
 
 /* =========================

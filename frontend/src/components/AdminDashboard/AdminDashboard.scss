@@ -78,7 +78,9 @@
             justify-content: space-between;
             align-items: center;
             backdrop-filter: blur(10px);
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease;
 
             &:hover {
                 transform: translateY(-5px);
@@ -151,10 +153,19 @@
             background: var(--input-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 11px 16px;
+            padding: 11px 40px 11px 16px;
             color: var(--primary-color);
             outline: none;
             cursor: pointer;
+            appearance: none; /* Remove default arrow */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+
+            /* Custom dropdown arrow positioned to the right */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px;
 
             &:focus {
                 border-color: var(--accent-color-2);
@@ -444,5 +455,181 @@
     }
     to {
         transform: rotate(360deg);
+    }
+}
+
+/* =========================
+   LIGHT MODE OVERRIDES
+========================= */
+
+[data-theme="light"] {
+    .admin-dashboard {
+        .stats-grid .stat-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.25);
+                border-color: var(--accent-color-2);
+            }
+
+            .stat-info {
+                h3 {
+                    color: rgba(255, 255, 255, 0.9);
+                }
+                .count {
+                    color: #ffffff;
+                }
+            }
+        }
+
+        .controls {
+            .search-box input {
+                background: rgba(255, 255, 255, 0.2);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                color: #ffffff;
+
+                &::placeholder {
+                    color: rgba(255, 255, 255, 0.6);
+                }
+
+                &:focus {
+                    background: rgba(255, 255, 255, 0.25);
+                    border-color: var(--accent-color-2);
+                }
+            }
+
+            .filter-box select {
+                /* Combine background color and arrow icon */
+                background-color: rgba(255, 255, 255, 0.2);
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 12px center;
+                background-size: 12px;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                color: #ffffff;
+
+                &:focus {
+                    background-color: rgba(255, 255, 255, 0.25);
+                    border-color: var(--accent-color-2);
+                }
+            }
+
+            /* Dropdown options styling for light mode */
+            .filter-box select option {
+                background: #001a3d;
+                color: #ffffff;
+                padding: 10px;
+            }
+
+            .refresh-btn {
+                background: rgba(0, 229, 204, 0.15);
+                border-color: var(--accent-color-2);
+                color: var(--accent-color-2);
+
+                &:hover:not(:disabled) {
+                    background: var(--accent-color-2);
+                    color: #001a3d;
+                }
+            }
+        }
+
+        .table-container {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+    }
+
+    .user-table {
+        th {
+            background: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .user-info .avatar {
+            background: var(--accent-color-2);
+            color: #001a3d;
+        }
+
+        .badge {
+            &.role.admin {
+                background: rgba(0, 229, 204, 0.2);
+                color: #00ffdd;
+                border: 1px solid rgba(0, 229, 204, 0.4);
+            }
+
+            &.role.user {
+                background: rgba(255, 255, 255, 0.2);
+                color: #ffffff;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+            }
+
+            &.status.pending {
+                background: rgba(255, 215, 0, 0.2);
+                color: #ffd700;
+                border: 1px solid rgba(255, 215, 0, 0.4);
+            }
+
+            &.status.approved {
+                background: rgba(46, 204, 113, 0.2);
+                color: #2ecc71;
+                border: 1px solid rgba(46, 204, 113, 0.4);
+            }
+
+            &.status.suspended {
+                background: rgba(231, 76, 60, 0.2);
+                color: #ff6b6b;
+                border: 1px solid rgba(231, 76, 60, 0.4);
+            }
+
+            &.status.rejected {
+                background: rgba(149, 165, 166, 0.2);
+                color: #b0bec5;
+                border: 1px solid rgba(149, 165, 166, 0.4);
+            }
+        }
+
+        .actions .btn {
+            &.edit {
+                background: var(--accent-color-2);
+                color: #001a3d;
+            }
+
+            &.delete {
+                background: rgba(231, 76, 60, 0.15);
+                border: 1px solid rgba(231, 76, 60, 0.5);
+                color: #ff6b6b;
+
+                &:hover {
+                    background: #e74c3c;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    .user-table-wrapper .pagination {
+        .page-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, 0.9);
+
+            &:hover:not(:disabled) {
+                background: rgba(0, 229, 204, 0.2);
+                border-color: var(--accent-color-2);
+                color: var(--accent-color-2);
+            }
+
+            &.active {
+                background: var(--accent-color-2);
+                border-color: var(--accent-color-2);
+                color: #001a3d;
+            }
+        }
     }
 }
