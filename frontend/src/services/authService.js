@@ -12,6 +12,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import { createUserProfile, getUserProfile, updateLastLogin, getUserByEmail } from "./userService";
+import { sendAdminNotificationEmail } from "./emailService";
 
 // Initialize providers
 const googleProvider = new GoogleAuthProvider();
@@ -80,6 +81,14 @@ export const signUpWithEmail = async (email, password, name, phone) => {
             displayName: name,
             phoneNumber: phone,
         });
+
+        // Send email notification to admins (non-blocking)
+        sendAdminNotificationEmail({
+            uid: userCredential.user.uid,
+            email,
+            displayName: name,
+            phoneNumber: phone,
+        }).catch((err) => console.error("Failed to send admin notification:", err));
 
         // Sign out user immediately (they need approval first)
         await firebaseSignOut(auth);
@@ -153,6 +162,14 @@ export const signInWithGoogle = async () => {
                 phoneNumber: result.user.phoneNumber || "",
             });
 
+            // Send email notification to admins (non-blocking)
+            sendAdminNotificationEmail({
+                uid: result.user.uid,
+                email: result.user.email,
+                displayName: result.user.displayName,
+                phoneNumber: result.user.phoneNumber || "",
+            }).catch((err) => console.error("Failed to send admin notification:", err));
+
             // Sign out new user (needs approval)
             await firebaseSignOut(auth);
             return {
@@ -205,6 +222,14 @@ export const signInWithApple = async () => {
                 displayName: result.user.displayName,
                 phoneNumber: result.user.phoneNumber || "",
             });
+
+            // Send email notification to admins (non-blocking)
+            sendAdminNotificationEmail({
+                uid: result.user.uid,
+                email: result.user.email,
+                displayName: result.user.displayName,
+                phoneNumber: result.user.phoneNumber || "",
+            }).catch((err) => console.error("Failed to send admin notification:", err));
 
             // Sign out new user (needs approval)
             await firebaseSignOut(auth);
