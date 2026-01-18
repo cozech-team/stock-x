@@ -17,10 +17,10 @@ const AdminRoute = ({ children }) => {
         // If loading is finished and user is not authenticated or not an admin
         if (!loading) {
             if (!user) {
-                router.push("/signin");
+                router.replace("/signin");
             } else if (userProfile && userProfile.role !== "admin") {
                 // If user is authenticated but not an admin, redirect to home
-                router.push("/");
+                router.replace("/");
             }
         }
     }, [user, userProfile, loading, router]);

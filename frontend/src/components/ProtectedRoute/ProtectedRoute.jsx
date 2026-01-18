@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children }) => {
 
     useEffect(() => {
         if (!loading && !user) {
-            router.push("/signin");
+            router.replace("/signin");
         }
     }, [user, loading, router]);
 
