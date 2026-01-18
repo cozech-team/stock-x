@@ -13,7 +13,7 @@ export default function Home() {
 
     const handleLogout = async () => {
         await signOut();
-        router.push("/signin");
+        router.replace("/signin");
     };
 
     return (

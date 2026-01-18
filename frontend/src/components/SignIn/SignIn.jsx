@@ -54,11 +54,11 @@ const SignIn = () => {
             const result = await signInWithEmail(formData.email, formData.password);
 
             if (result.success) {
-                // Redirect based on role
+                // Redirect based on role (use replace to prevent back navigation)
                 if (result.profile?.role === "admin") {
-                    router.push("/admin");
+                    router.replace("/admin");
                 } else {
-                    router.push("/");
+                    router.replace("/");
                 }
             } else {
                 // Show error message (includes approval status errors)
@@ -80,9 +80,9 @@ const SignIn = () => {
 
             if (result.success) {
                 if (result.profile?.role === "admin") {
-                    router.push("/admin");
+                    router.replace("/admin");
                 } else {
-                    router.push("/");
+                    router.replace("/");
                 }
             } else {
                 setError(result.error);
@@ -103,9 +103,9 @@ const SignIn = () => {
 
             if (result.success) {
                 if (result.profile?.role === "admin") {
-                    router.push("/admin");
+                    router.replace("/admin");
                 } else {
-                    router.push("/");
+                    router.replace("/");
                 }
             } else {
                 setError(result.error);

@@ -1,10 +1,10 @@
 import PageTransition from "@/components/PageTransition/PageTransition";
-import SignIn from "@/components/SignIn/SignIn";
+import SignInWrapper from "@/components/SignIn/SignInWrapper";
 
 export default function Page() {
     return (
         <PageTransition>
-            <SignIn />
+            <SignInWrapper />
         </PageTransition>
     );
 }

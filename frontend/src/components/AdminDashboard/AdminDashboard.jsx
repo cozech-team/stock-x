@@ -112,7 +112,7 @@ const AdminDashboard = () => {
     const handleLogout = async () => {
         const result = await signOut();
         if (result.success) {
-            router.push("/signin");
+            router.replace("/signin");
         } else {
             alert("Error signing out: " + result.error);
         }
