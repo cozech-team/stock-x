@@ -67,7 +67,64 @@ export const checkUserApprovalStatus = async (uid) => {
  */
 export const signUpWithEmail = async (email, password, name, phone) => {
     try {
-        // Create user in Firebase Auth
+        // Check if email already exists in Firebase Auth
+        const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+
+        if (signInMethods.length > 0) {
+            // Email exists in Auth - check if profile exists in Firestore
+            const profileResult = await getUserByEmail(email);
+
+            if (profileResult.success) {
+                // User exists in both Auth and Firestore
+                return {
+                    success: false,
+                    error: "This email is already registered. Please sign in instead.",
+                };
+            }
+
+            // User exists in Auth but not in Firestore (was deleted)
+            // Sign them in to get their UID, then recreate profile
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+                // Recreate user profile in Firestore
+                await createUserProfile(userCredential.user.uid, {
+                    email,
+                    displayName: name,
+                    phoneNumber: phone,
+                });
+
+                // Update display name in Auth
+                await updateProfile(userCredential.user, {
+                    displayName: name,
+                });
+
+                // Send email notification to admins (non-blocking)
+                sendAdminNotificationEmail({
+                    uid: userCredential.user.uid,
+                    email,
+                    displayName: name,
+                    phoneNumber: phone,
+                }).catch((err) => console.error("Failed to send admin notification:", err));
+
+                // Sign out user immediately (they need approval first)
+                await firebaseSignOut(auth);
+
+                return {
+                    success: true,
+                    user: userCredential.user,
+                    message: "Account recreated successfully! Please wait for admin approval before signing in.",
+                };
+            } catch (signInError) {
+                // Wrong password or other error
+                return {
+                    success: false,
+                    error: "This email is already registered with a different password. Please sign in or reset your password.",
+                };
+            }
+        }
+
+        // Email doesn't exist - create new account
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
         // Update user profile with name

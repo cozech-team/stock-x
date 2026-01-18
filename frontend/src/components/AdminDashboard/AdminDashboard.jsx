@@ -86,7 +86,7 @@ const AdminDashboard = () => {
 
     const handleDelete = async (userToDelete) => {
         if (window.confirm(`Are you sure you want to PERMANENTLY delete ${userToDelete.email}?`)) {
-            const result = await deleteUser(userToDelete);
+            const result = await deleteUser(userToDelete, user.uid);
             if (result.success) {
                 fetchUsers();
             } else {

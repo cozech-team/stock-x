@@ -264,19 +264,30 @@ export const updateLastLogin = async (uid) => {
 };
 
 /**
- * Delete user from Firestore
- * NOTE: This only deletes the user profile from Firestore.
- * Firebase Auth accounts can only be deleted by the user themselves or via Firebase Admin SDK.
- * For security reasons, admins cannot delete other users' Auth accounts from the client side.
+ * Delete user completely from Firestore and Firebase Auth
+ * Uses Firebase Admin SDK via API route
  */
-export const deleteUser = async (user) => {
+export const deleteUser = async (user, adminUid) => {
     try {
-        // Delete from Firestore
-        await deleteUserProfile(user.uid);
+        const response = await fetch("/api/delete-user", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                uid: user.uid,
+                adminUid: adminUid,
+            }),
+        });
 
-        // Note: Cannot delete from Firebase Auth client-side
-        // The user's Auth account will remain but they won't be able to sign in
-        // because their Firestore profile is deleted
+        const result = await response.json();
+
+        if (!response.ok) {
+            return {
+                success: false,
+                error: result.error || "Failed to delete user",
+            };
+        }
 
         return { success: true };
     } catch (error) {
