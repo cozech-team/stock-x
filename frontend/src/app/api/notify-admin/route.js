@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { adminDb } from "@/lib/firebaseAdmin";
 
 /**
  * API Route: Send email notification to all admins about new user signup
@@ -7,18 +8,22 @@ import nodemailer from "nodemailer";
  */
 export async function POST(request) {
     try {
-        const { uid, email, displayName, phoneNumber, timestamp, adminEmails } = await request.json();
+        const { uid, email, displayName, phoneNumber, timestamp } = await request.json();
 
         // Validate required fields
         if (!uid || !email || !displayName) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
         }
 
-        // Validate admin emails (received from client)
-        if (!adminEmails || adminEmails.length === 0) {
+        // Fetch admin emails from Firestore using Admin SDK (bypasses security rules)
+        const adminsSnapshot = await adminDb.collection("users").where("role", "==", "admin").get();
+
+        if (adminsSnapshot.empty) {
             console.warn("No admins found to notify");
             return NextResponse.json({ message: "No admins to notify" }, { status: 200 });
         }
+
+        const adminEmails = adminsSnapshot.docs.map((doc) => doc.data().email).filter(Boolean);
 
         // Configure nodemailer transporter
         const transporter = nodemailer.createTransport({

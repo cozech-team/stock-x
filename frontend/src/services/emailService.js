@@ -3,33 +3,9 @@
  * Handles sending email notifications to admins
  */
 
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../lib/firebase";
-
-/**
- * Get all admin email addresses from Firestore
- * @returns {Promise<string[]>} Array of admin email addresses
- */
-const getAdminEmails = async () => {
-    try {
-        const adminsRef = collection(db, "users");
-        const adminQuery = query(adminsRef, where("role", "==", "admin"));
-        const adminSnapshot = await getDocs(adminQuery);
-
-        if (adminSnapshot.empty) {
-            console.warn("No admins found to notify");
-            return [];
-        }
-
-        return adminSnapshot.docs.map((doc) => doc.data().email);
-    } catch (error) {
-        console.error("Error fetching admin emails:", error);
-        return [];
-    }
-};
-
 /**
  * Send notification email to all admins about new user signup
+ * Admin emails are fetched server-side using Firebase Admin SDK
  * @param {Object} userData - New user's information
  * @param {string} userData.uid - User ID
  * @param {string} userData.email - User email
@@ -39,17 +15,6 @@ const getAdminEmails = async () => {
  */
 export const sendAdminNotificationEmail = async (userData) => {
     try {
-        // Fetch admin emails client-side (avoids server-side Firestore permission issues)
-        const adminEmails = await getAdminEmails();
-
-        if (adminEmails.length === 0) {
-            console.warn("No admin emails found, skipping notification");
-            return {
-                success: false,
-                error: "No admins to notify",
-            };
-        }
-
         const response = await fetch("/api/notify-admin", {
             method: "POST",
             headers: {
@@ -61,7 +26,6 @@ export const sendAdminNotificationEmail = async (userData) => {
                 displayName: userData.displayName,
                 phoneNumber: userData.phoneNumber,
                 timestamp: new Date().toISOString(),
-                adminEmails, // Pass admin emails from client
             }),
         });
 
