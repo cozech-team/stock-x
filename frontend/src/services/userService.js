@@ -104,6 +104,14 @@ export const updateUserProfile = async (uid, updates) => {
 };
 
 /**
+ * Update Firestore user (alias for updateUserProfile)
+ * Used by admin dashboard for editing user details
+ */
+export const updateFirestoreUser = async (uid, updates) => {
+    return await updateUserProfile(uid, updates);
+};
+
+/**
  * Delete user profile from Firestore
  */
 export const deleteUserProfile = async (uid) => {

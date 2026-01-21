@@ -1,7 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { getAllUsers, approveUser, rejectUser, suspendUser, deleteUser } from "../../services/userService";
+import {
+    getAllUsers,
+    approveUser,
+    rejectUser,
+    suspendUser,
+    deleteUser,
+    updateFirestoreUser,
+} from "../../services/userService";
 import { useAuth } from "../../contexts/AuthContext";
 import UserManagementTable from "./UserManagementTable";
 import UserEditModal from "./UserEditModal";
