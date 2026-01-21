@@ -1,7 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
-import { PACKAGE_OPTIONS, getPackageLabel, getRemainingDays, isPackageExpired } from "../../constants/packages";
+import React, { useState, useEffect } from "react";
+import {
+    PACKAGE_OPTIONS,
+    getPackageLabel,
+    getRemainingTimeMs,
+    isPackageExpired,
+    formatRemainingTime,
+} from "../../constants/packages";
 
 const UserManagementTable = ({
     users,
@@ -30,6 +36,15 @@ const UserManagementTable = ({
 
     // State to track selected packages for each user
     const [selectedPackages, setSelectedPackages] = useState({});
+    // State to force re-render for live countdown
+    const [, setTick] = useState(0);
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setTick((t) => t + 1);
+        }, 60000); // Update every minute for production
+        return () => clearInterval(timer);
+    }, []);
 
     const handlePackageChange = (userId, packageValue) => {
         setSelectedPackages((prev) => ({
@@ -103,11 +118,9 @@ const UserManagementTable = ({
                                             </span>
                                             {user.package && (
                                                 <div
-                                                    className={`remaining-days ${isPackageExpired(user.packageEndDate) ? "expired" : getRemainingDays(user.packageEndDate) <= 3 ? "warning" : ""}`}
+                                                    className={`remaining-days ${isPackageExpired(user.packageEndDate) ? "expired" : getRemainingTimeMs(user.packageEndDate) <= 1000 * 60 * 60 * 24 * 2 ? "warning" : ""}`}
                                                 >
-                                                    {isPackageExpired(user.packageEndDate)
-                                                        ? "Expired"
-                                                        : `${getRemainingDays(user.packageEndDate)} days left`}
+                                                    {formatRemainingTime(user.packageEndDate)}
                                                 </div>
                                             )}
                                         </div>

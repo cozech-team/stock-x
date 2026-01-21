@@ -8,6 +8,7 @@ import {
     suspendUser,
     deleteUser,
     updateFirestoreUser,
+    checkAndHandlePackageExpiry,
 } from "../../services/userService";
 import { useAuth } from "../../contexts/AuthContext";
 import UserManagementTable from "./UserManagementTable";
@@ -16,6 +17,7 @@ import Spinner from "../Spinner/Spinner";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import { signOut } from "../../services/authService";
 import { useRouter } from "next/navigation";
+import { calculatePackageEndDate } from "../../constants/packages";
 import "./AdminDashboard.scss";
 
 const AdminDashboard = () => {
@@ -42,8 +44,19 @@ const AdminDashboard = () => {
         setIsRefreshing(true);
         const result = await getAllUsers();
         if (result.success) {
+            // Auto-suspend expired users on fetch
+            const validatedUsers = await Promise.all(
+                result.data.map(async (u) => {
+                    const expiry = await checkAndHandlePackageExpiry(u);
+                    if (expiry.expired) {
+                        return { ...u, status: "suspended", packageStatus: "expired" };
+                    }
+                    return u;
+                }),
+            );
+
             // Sort users by createdAt timestamp (newest first)
-            const sortedUsers = result.data.sort((a, b) => {
+            const sortedUsers = validatedUsers.sort((a, b) => {
                 const dateA = a.createdAt?.toDate?.() || new Date(a.createdAt || 0);
                 const dateB = b.createdAt?.toDate?.() || new Date(b.createdAt || 0);
                 return dateB - dateA; // Descending order (newest first)
@@ -60,6 +73,34 @@ const AdminDashboard = () => {
     useEffect(() => {
         fetchUsers();
     }, []);
+
+    // Background Expiry Checker: Runs every 30 seconds to catch expired users in real-time
+    useEffect(() => {
+        const backgroundChecker = setInterval(async () => {
+            if (users.length === 0) return;
+
+            let updatedAny = false;
+            const updatedUsers = await Promise.all(
+                users.map(async (u) => {
+                    // Only check approved users who have a package
+                    if (u.status === "approved" && u.package && u.role !== "admin") {
+                        const expiry = await checkAndHandlePackageExpiry(u);
+                        if (expiry.expired) {
+                            updatedAny = true;
+                            return { ...u, status: "suspended", packageStatus: "expired" };
+                        }
+                    }
+                    return u;
+                }),
+            );
+
+            if (updatedAny) {
+                setUsers(updatedUsers);
+            }
+        }, 60000); // 60 second interval for production
+
+        return () => clearInterval(backgroundChecker);
+    }, [users]);
 
     useEffect(() => {
         // Reset to first page when filtering or searching
@@ -120,6 +161,19 @@ const AdminDashboard = () => {
     };
 
     const handleSaveUser = async (uid, updatedData) => {
+        // If package changed, recalculate dates
+        if (updatedData.package && updatedData.package !== selectedUser.package) {
+            const now = new Date();
+            const endDate = calculatePackageEndDate(now, updatedData.package);
+
+            updatedData.packageStartDate = now;
+            updatedData.packageEndDate = endDate;
+            updatedData.packageStatus = "active";
+
+            // If user was suspended, changing package should ideally reactivate them if status is approved
+            // But we keep the status as chosen in the modal
+        }
+
         const result = await updateFirestoreUser(uid, updatedData);
         if (result.success) {
             fetchUsers();

@@ -11,7 +11,7 @@ import {
     serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../lib/firebase";
-import { isPackageExpired } from "../constants/packages";
+import { isPackageExpired, calculatePackageEndDate } from "../constants/packages";
 
 const USERS_COLLECTION = "users";
 
@@ -206,8 +206,7 @@ export const approveUser = async (uid, adminUid, packageData = null) => {
         // Add package data if provided
         if (packageData) {
             const now = new Date();
-            const endDate = new Date(now);
-            endDate.setDate(endDate.getDate() + packageData.days);
+            const endDate = calculatePackageEndDate(now, packageData.type);
 
             updateData.package = packageData.type;
             updateData.packageStartDate = now;

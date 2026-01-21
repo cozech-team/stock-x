@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Spinner from "../Spinner/Spinner";
+import { PACKAGE_OPTIONS } from "../../constants/packages";
 import "./UserEditModal.scss";
 
 const UserEditModal = ({ user, isOpen, onClose, onSave }) => {
@@ -11,6 +12,7 @@ const UserEditModal = ({ user, isOpen, onClose, onSave }) => {
         phoneNumber: "",
         role: "user",
         status: "pending",
+        package: "",
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -23,6 +25,7 @@ const UserEditModal = ({ user, isOpen, onClose, onSave }) => {
                 phoneNumber: user.phoneNumber || "",
                 role: user.role || "user",
                 status: user.status || "pending",
+                package: user.package || "",
             });
         }
     }, [user]);
@@ -104,6 +107,20 @@ const UserEditModal = ({ user, isOpen, onClose, onSave }) => {
                             </select>
                         </div>
                     </div>
+
+                    {formData.role !== "admin" && (
+                        <div className="form-group">
+                            <label>Subscription Package</label>
+                            <select name="package" value={formData.package} onChange={handleInputChange}>
+                                <option value="">No Package / Custom</option>
+                                {PACKAGE_OPTIONS.map((pkg) => (
+                                    <option key={pkg.value} value={pkg.value}>
+                                        {pkg.label}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
 
                     <div className="modal-actions">
                         <button type="button" className="btn-cancel" onClick={onClose} disabled={loading}>
