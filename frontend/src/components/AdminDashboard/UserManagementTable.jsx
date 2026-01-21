@@ -34,7 +34,6 @@ const UserManagementTable = ({
                     <tr>
                         <th>User</th>
                         <th>Email</th>
-                        <th>Role</th>
                         <th>Status</th>
                         <th>Joined At</th>
                         <th>Actions</th>
@@ -47,12 +46,12 @@ const UserManagementTable = ({
                                 <div className="avatar">
                                     {user.displayName ? user.displayName.charAt(0).toUpperCase() : "?"}
                                 </div>
-                                <span>{user.displayName || "Anonymous"}</span>
+                                <div className="user-name-wrapper">
+                                    <span>{user.displayName || "Anonymous"}</span>
+                                    {user.role === "admin" && <span className="badge admin-badge">Admin</span>}
+                                </div>
                             </td>
                             <td>{user.email}</td>
-                            <td>
-                                <span className={`badge role ${user.role}`}>{user.role}</span>
-                            </td>
                             <td>
                                 <span className={`badge status ${user.status}`}>{user.status}</span>
                             </td>

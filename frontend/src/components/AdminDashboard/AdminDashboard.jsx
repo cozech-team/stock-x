@@ -137,9 +137,20 @@ const AdminDashboard = () => {
         pending: users.filter((u) => u.status === "pending").length,
         approved: users.filter((u) => u.status === "approved").length,
         suspended: users.filter((u) => u.status === "suspended").length,
+        admin: users.filter((u) => u.role === "admin").length,
     };
 
     const filteredUsers = users.filter((u) => {
+        // Handle role-based filtering (admin)
+        if (filterStatus === "admin") {
+            const matchesRole = u.role === "admin";
+            const matchesSearch =
+                u.displayName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                u.email?.toLowerCase().includes(searchTerm.toLowerCase());
+            return matchesRole && matchesSearch;
+        }
+
+        // Handle status-based filtering
         const matchesStatus = filterStatus === "all" || u.status === filterStatus;
         const matchesSearch =
             u.displayName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -225,6 +236,7 @@ const AdminDashboard = () => {
                             <option value="approved">Approved</option>
                             <option value="rejected">Rejected</option>
                             <option value="suspended">Suspended</option>
+                            <option value="admin">Admin</option>
                         </select>
                     </div>
                     <button

@@ -365,6 +365,25 @@
         }
     }
 
+    .user-name-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .admin-badge {
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        background: rgba(127, 86, 217, 0.15);
+        color: #a29bfe;
+        border: 1px solid rgba(127, 86, 217, 0.3);
+    }
+
     .actions {
         .actions-wrapper {
             display: flex;
@@ -573,6 +592,11 @@
                 background: rgba(255, 215, 0, 0.2);
                 color: #ffd700;
                 border: 1px solid rgba(255, 215, 0, 0.4);
+            }
+            &.admin-badge {
+                background: rgba(0, 229, 204, 0.2);
+                color: #00ffdd;
+                border: 1px solid rgba(0, 229, 204, 0.4);
             }
 
             &.status.approved {
