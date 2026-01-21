@@ -11,8 +11,36 @@ import {
     serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../lib/firebase";
+import { isPackageExpired } from "../constants/packages";
 
 const USERS_COLLECTION = "users";
+
+/**
+ * Check and handle package expiry for a user
+ * If expired, updates status to suspended
+ */
+export const checkAndHandlePackageExpiry = async (user) => {
+    if (!user || user.role === "admin" || user.status !== "approved") {
+        return { expired: false };
+    }
+
+    if (user.packageEndDate && isPackageExpired(user.packageEndDate)) {
+        try {
+            const userRef = doc(db, USERS_COLLECTION, user.uid);
+            await updateDoc(userRef, {
+                status: "suspended",
+                packageStatus: "expired",
+                updatedAt: serverTimestamp(),
+            });
+            return { expired: true };
+        } catch (error) {
+            console.error("Error auto-suspending expired user:", error);
+            return { expired: true }; // Still treat as expired even if Firestore update fails
+        }
+    }
+
+    return { expired: false };
+};
 
 /**
  * Create user profile in Firestore
@@ -163,17 +191,31 @@ export const getPendingUsers = async () => {
 };
 
 /**
- * Approve user account
+ * Approve user account with package
  */
-export const approveUser = async (uid, adminUid) => {
+export const approveUser = async (uid, adminUid, packageData = null) => {
     try {
         const userRef = doc(db, USERS_COLLECTION, uid);
-        await updateDoc(userRef, {
+        const updateData = {
             status: "approved",
             approvedAt: serverTimestamp(),
             approvedBy: adminUid,
             updatedAt: serverTimestamp(),
-        });
+        };
+
+        // Add package data if provided
+        if (packageData) {
+            const now = new Date();
+            const endDate = new Date(now);
+            endDate.setDate(endDate.getDate() + packageData.days);
+
+            updateData.package = packageData.type;
+            updateData.packageStartDate = now;
+            updateData.packageEndDate = endDate;
+            updateData.packageStatus = "active";
+        }
+
+        await updateDoc(userRef, updateData);
         return { success: true };
     } catch (error) {
         console.error("Error approving user:", error);

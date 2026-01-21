@@ -66,8 +66,14 @@ const AdminDashboard = () => {
         setCurrentPage(1);
     }, [filterStatus, searchTerm]);
 
-    const handleApprove = async (uid) => {
-        const result = await approveUser(uid, user.uid);
+    const handleApprove = async (uid, packageData) => {
+        // Validate package selection
+        if (!packageData || !packageData.type) {
+            alert("Please select a package before approving the user.");
+            return;
+        }
+
+        const result = await approveUser(uid, user.uid, packageData);
         if (result.success) {
             fetchUsers(); // Refresh list
         } else {

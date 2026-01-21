@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import { PACKAGE_OPTIONS, getPackageLabel, getRemainingDays, isPackageExpired } from "../../constants/packages";
 
 const UserManagementTable = ({
     users,
@@ -27,6 +28,33 @@ const UserManagementTable = ({
         return date.toLocaleDateString() + " " + date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     };
 
+    // State to track selected packages for each user
+    const [selectedPackages, setSelectedPackages] = useState({});
+
+    const handlePackageChange = (userId, packageValue) => {
+        setSelectedPackages((prev) => ({
+            ...prev,
+            [userId]: packageValue,
+        }));
+    };
+
+    const handleApproveClick = (user) => {
+        const isUserAdmin = user.role === "admin";
+        const packageType = selectedPackages[user.uid || user.id];
+
+        if (!isUserAdmin && !packageType) {
+            alert("Please select a package before approving.");
+            return;
+        }
+
+        if (isUserAdmin) {
+            onApprove(user.uid || user.id, null);
+        } else {
+            const packageData = PACKAGE_OPTIONS.find((p) => p.value === packageType);
+            onApprove(user.uid || user.id, { type: packageData.value, days: packageData.days });
+        }
+    };
+
     return (
         <div className="user-table-wrapper">
             <table className="user-table">
@@ -34,6 +62,7 @@ const UserManagementTable = ({
                     <tr>
                         <th>User</th>
                         <th>Email</th>
+                        <th>Package</th>
                         <th>Status</th>
                         <th>Joined At</th>
                         <th>Actions</th>
@@ -53,6 +82,41 @@ const UserManagementTable = ({
                             </td>
                             <td>{user.email}</td>
                             <td>
+                                {user.role !== "admin" ? (
+                                    user.status === "pending" ? (
+                                        <select
+                                            className="package-select"
+                                            value={selectedPackages[user.uid || user.id] || ""}
+                                            onChange={(e) => handlePackageChange(user.uid || user.id, e.target.value)}
+                                        >
+                                            <option value="">Select Package</option>
+                                            {PACKAGE_OPTIONS.map((pkg) => (
+                                                <option key={pkg.value} value={pkg.value}>
+                                                    {pkg.label}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    ) : (
+                                        <div className="package-info-display">
+                                            <span className="badge package-badge">
+                                                {user.package ? getPackageLabel(user.package) : "N/A"}
+                                            </span>
+                                            {user.package && (
+                                                <div
+                                                    className={`remaining-days ${isPackageExpired(user.packageEndDate) ? "expired" : getRemainingDays(user.packageEndDate) <= 3 ? "warning" : ""}`}
+                                                >
+                                                    {isPackageExpired(user.packageEndDate)
+                                                        ? "Expired"
+                                                        : `${getRemainingDays(user.packageEndDate)} days left`}
+                                                </div>
+                                            )}
+                                        </div>
+                                    )
+                                ) : (
+                                    <span className="text-muted">N/A</span>
+                                )}
+                            </td>
+                            <td>
                                 <span className={`badge status ${user.status}`}>{user.status}</span>
                             </td>
                             <td>{formatDate(user.createdAt)}</td>
@@ -62,7 +126,7 @@ const UserManagementTable = ({
                                         <>
                                             <button
                                                 className="btn approve"
-                                                onClick={() => onApprove(user.uid || user.id)}
+                                                onClick={() => handleApproveClick(user)}
                                                 title="Approve User"
                                             >
                                                 Approve
@@ -88,7 +152,7 @@ const UserManagementTable = ({
                                     {user.status === "suspended" && (
                                         <button
                                             className="btn approve"
-                                            onClick={() => onApprove(user.uid || user.id)}
+                                            onClick={() => handleApproveClick(user)}
                                             title="Re-approve User"
                                         >
                                             Re-activate

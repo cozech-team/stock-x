@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../lib/firebase";
-import { getUserProfile } from "../services/userService";
+import { getUserProfile, checkAndHandlePackageExpiry } from "../services/userService";
 
 const AuthContext = createContext({});
 
@@ -29,7 +29,21 @@ export const AuthProvider = ({ children }) => {
                 const profileResult = await getUserProfile(user.uid);
 
                 if (profileResult.success) {
-                    setUserProfile(profileResult.data);
+                    let profileData = profileResult.data;
+
+                    // Check for package expiry and handle auto-suspension
+                    const expiryCheck = await checkAndHandlePackageExpiry(profileData);
+
+                    if (expiryCheck.expired) {
+                        // Refresh profile data if it was updated (auto-suspended)
+                        profileData = {
+                            ...profileData,
+                            status: "suspended",
+                            packageStatus: "expired",
+                        };
+                    }
+
+                    setUserProfile(profileData);
                 } else {
                     setUserProfile(null);
                 }

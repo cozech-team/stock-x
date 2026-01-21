@@ -384,6 +384,56 @@
         border: 1px solid rgba(127, 86, 217, 0.3);
     }
 
+    .package-select {
+        background: var(--input-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        padding: 6px 12px;
+        color: var(--primary-color);
+        font-size: 13px;
+        cursor: pointer;
+        outline: none;
+        min-width: 150px;
+
+        &:focus {
+            border-color: var(--accent-color-2);
+        }
+    }
+
+    .package-badge {
+        background: rgba(52, 152, 219, 0.15);
+        color: #3498db;
+        border: 1px solid rgba(52, 152, 219, 0.3);
+    }
+
+    .text-muted {
+        color: var(--text-muted);
+        font-style: italic;
+        font-size: 13px;
+        opacity: 0.7;
+    }
+
+    .package-info-display {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        align-items: flex-start;
+
+        .remaining-days {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-muted);
+
+            &.warning {
+                color: #f39c12;
+            }
+
+            &.expired {
+                color: #e74c3c;
+            }
+        }
+    }
+
     .actions {
         .actions-wrapper {
             display: flex;
@@ -616,6 +666,34 @@
                 color: #b0bec5;
                 border: 1px solid rgba(149, 165, 166, 0.4);
             }
+        }
+
+        .package-select {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+
+            option {
+                background: #001a3d;
+                color: #ffffff;
+            }
+
+            &:focus {
+                background: rgba(255, 255, 255, 0.25);
+                border-color: var(--accent-color-2);
+            }
+        }
+
+        .package-badge {
+            background: rgba(52, 152, 219, 0.2);
+            color: #5dade2;
+            border: 1px solid rgba(52, 152, 219, 0.4);
+        }
+
+        .text-muted {
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+            font-size: 13px;
         }
 
         .actions .btn {
