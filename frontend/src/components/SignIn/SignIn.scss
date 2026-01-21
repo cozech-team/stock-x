@@ -75,7 +75,8 @@
                                     padding: 10px 16px;
                                     background: var(--primary-color);
                                     cursor: pointer;
-                                    box-shadow: 0px 1px 2px 0px rgba(10, 13, 18, 0.05),
+                                    box-shadow:
+                                        0px 1px 2px 0px rgba(10, 13, 18, 0.05),
                                         inset 0px -2px 0px 0px rgba(10, 13, 18, 0.05),
                                         inset 0px 0px 0px 1px rgba(10, 13, 18, 0.18);
                                     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -97,7 +98,8 @@
 
                                     &:hover {
                                         transform: translateY(-2px);
-                                        box-shadow: 0px 4px 8px 0px rgba(10, 13, 18, 0.15),
+                                        box-shadow:
+                                            0px 4px 8px 0px rgba(10, 13, 18, 0.15),
                                             inset 0px -2px 0px 0px rgba(10, 13, 18, 0.05),
                                             inset 0px 0px 0px 1px rgba(10, 13, 18, 0.18);
                                         filter: brightness(1.05);
@@ -137,6 +139,18 @@
                                 border: 1px solid rgba(239, 68, 68, 0.3);
                                 border-radius: 8px;
                                 color: var(--accent-color);
+                                font-size: 14px;
+                                font-weight: 500;
+                                line-height: 1.5;
+                                animation: slideDown 0.3s ease-out;
+                            }
+
+                            .warning-msg {
+                                padding: 12px 16px;
+                                background-color: rgba(251, 146, 60, 0.1);
+                                border: 1px solid rgba(251, 146, 60, 0.4);
+                                border-radius: 8px;
+                                color: #fb923c;
                                 font-size: 14px;
                                 font-weight: 500;
                                 line-height: 1.5;
@@ -240,7 +254,9 @@
                                 overflow: hidden;
 
                                 box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.12);
-                                transition: transform 0.3s ease, filter 0.3s ease;
+                                transition:
+                                    transform 0.3s ease,
+                                    filter 0.3s ease;
 
                                 span {
                                     position: relative;
@@ -409,6 +425,12 @@
                                     border-radius: 8px;
                                 }
 
+                                .warning-msg {
+                                    padding: 11px 15px;
+                                    font-size: 15px;
+                                    border-radius: 8px;
+                                }
+
                                 .form-group {
                                     .input-wrapper {
                                         input {
@@ -496,6 +518,12 @@
 
                             .item-2 {
                                 .error-msg {
+                                    padding: 11px 15px;
+                                    font-size: 15px;
+                                    border-radius: 8px;
+                                }
+
+                                .warning-msg {
                                     padding: 11px 15px;
                                     font-size: 15px;
                                     border-radius: 8px;
@@ -598,6 +626,12 @@
 
                             .item-2 {
                                 .error-msg {
+                                    padding: 10px 14px;
+                                    font-size: 13px;
+                                    border-radius: 6px;
+                                }
+
+                                .warning-msg {
                                     padding: 10px 14px;
                                     font-size: 13px;
                                     border-radius: 6px;
@@ -715,6 +749,12 @@
                                     border-radius: clamp(8px, calc(0.26vw + 6px), 12px);
                                 }
 
+                                .warning-msg {
+                                    padding: clamp(12px, calc(0.52vw + 8px), 18px) clamp(16px, calc(0.78vw + 10px), 24px);
+                                    font-size: clamp(14px, calc(0.39vw + 10px), 20px);
+                                    border-radius: clamp(8px, calc(0.26vw + 6px), 12px);
+                                }
+
                                 .form-group {
                                     gap: clamp(8px, calc(0.52vw + 2px), 16px);
                                     .label-wrapper {
@@ -812,6 +852,12 @@
                                 gap: clamp(20px, 2.82vw, 48px);
 
                                 .error-msg {
+                                    padding: clamp(12px, calc(0.52vw + 10px), 20px) clamp(16px, calc(0.78vw + 12px), 26px);
+                                    font-size: clamp(14px, calc(0.39vw + 14px), 22px);
+                                    border-radius: clamp(8px, calc(0.26vw + 7px), 14px);
+                                }
+
+                                .warning-msg {
                                     padding: clamp(12px, calc(0.52vw + 10px), 20px) clamp(16px, calc(0.78vw + 12px), 26px);
                                     font-size: clamp(14px, calc(0.39vw + 14px), 22px);
                                     border-radius: clamp(8px, calc(0.26vw + 7px), 14px);

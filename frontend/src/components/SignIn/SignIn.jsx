@@ -13,6 +13,7 @@ const SignIn = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [messageType, setMessageType] = useState("error"); // "error" or "warning"
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -30,12 +31,16 @@ const SignIn = () => {
             [name]: value,
         }));
         // Clear error when user starts typing
-        if (error) setError("");
+        if (error) {
+            setError("");
+            setMessageType("error");
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
+        setMessageType("error");
 
         // Validation
         if (!formData.email || !formData.password) {
@@ -61,7 +66,10 @@ const SignIn = () => {
                     router.replace("/");
                 }
             } else {
-                // Show error message (includes approval status errors)
+                // Check if it's a suspended account (warning) or other error
+                if (result.error && result.error.toLowerCase().includes("suspended")) {
+                    setMessageType("warning");
+                }
                 setError(result.error);
             }
         } catch (err) {
@@ -73,6 +81,7 @@ const SignIn = () => {
 
     const handleGoogleSignIn = async () => {
         setError("");
+        setMessageType("error");
         setLoading(true);
 
         try {
@@ -85,6 +94,10 @@ const SignIn = () => {
                     router.replace("/");
                 }
             } else {
+                // Check if it's a suspended account (warning) or other error
+                if (result.error && result.error.toLowerCase().includes("suspended")) {
+                    setMessageType("warning");
+                }
                 setError(result.error);
             }
         } catch (err) {
@@ -96,6 +109,7 @@ const SignIn = () => {
 
     const handleAppleSignIn = async () => {
         setError("");
+        setMessageType("error");
         setLoading(true);
 
         try {
@@ -108,6 +122,10 @@ const SignIn = () => {
                     router.replace("/");
                 }
             } else {
+                // Check if it's a suspended account (warning) or other error
+                if (result.error && result.error.toLowerCase().includes("suspended")) {
+                    setMessageType("warning");
+                }
                 setError(result.error);
             }
         } catch (err) {
@@ -168,7 +186,11 @@ const SignIn = () => {
 
                                 {/* ------ item-1 end ------ */}
                                 <form onSubmit={handleSubmit} className="item-2 flex flex-col gap-5">
-                                    {error && <div className="error-msg">{error}</div>}
+                                    {error && (
+                                        <div className={messageType === "warning" ? "warning-msg" : "error-msg"}>
+                                            {error}
+                                        </div>
+                                    )}
 
                                     <div className="form-group flex flex-col gap-2">
                                         <div className="label-wrapper flex justify-between">

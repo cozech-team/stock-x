@@ -176,6 +176,10 @@ export const signInWithEmail = async (email, password) => {
         if (!approvalStatus.approved) {
             // Sign out user if not approved
             await firebaseSignOut(auth);
+
+            // Wait for auth state to fully update before returning error
+            await new Promise((resolve) => setTimeout(resolve, 300));
+
             return {
                 success: false,
                 error: approvalStatus.message,
@@ -229,6 +233,10 @@ export const signInWithGoogle = async () => {
 
             // Sign out new user (needs approval)
             await firebaseSignOut(auth);
+
+            // Wait for auth state to fully update before returning error
+            await new Promise((resolve) => setTimeout(resolve, 300));
+
             return {
                 success: false,
                 error: "Account created successfully! Please wait for admin approval before signing in.",
@@ -240,6 +248,10 @@ export const signInWithGoogle = async () => {
 
         if (!approvalStatus.approved) {
             await firebaseSignOut(auth);
+
+            // Wait for auth state to fully update before returning error
+            await new Promise((resolve) => setTimeout(resolve, 300));
+
             return {
                 success: false,
                 error: approvalStatus.message,
@@ -290,6 +302,10 @@ export const signInWithApple = async () => {
 
             // Sign out new user (needs approval)
             await firebaseSignOut(auth);
+
+            // Wait for auth state to fully update before returning error
+            await new Promise((resolve) => setTimeout(resolve, 300));
+
             return {
                 success: false,
                 error: "Account created successfully! Please wait for admin approval before signing in.",
@@ -301,6 +317,10 @@ export const signInWithApple = async () => {
 
         if (!approvalStatus.approved) {
             await firebaseSignOut(auth);
+
+            // Wait for auth state to fully update before returning error
+            await new Promise((resolve) => setTimeout(resolve, 300));
+
             return {
                 success: false,
                 error: approvalStatus.message,

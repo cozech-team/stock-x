@@ -142,7 +142,6 @@ const SignUp = () => {
             if (result.success) {
                 router.push("/");
             } else {
-                // This will be the pending approval message for new users
                 setSuccess(true);
                 setError("");
             }

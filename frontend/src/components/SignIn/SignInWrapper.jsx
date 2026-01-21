@@ -16,12 +16,18 @@ const SignInWrapper = () => {
     const router = useRouter();
 
     useEffect(() => {
-        // If user is authenticated, redirect to appropriate dashboard
+        // If user is authenticated AND approved, redirect to appropriate dashboard
         if (!loading && user && userProfile) {
-            if (userProfile.role === "admin") {
-                router.replace("/admin");
+            // Check if user is approved
+            if (userProfile.status === "approved") {
+                if (userProfile.role === "admin") {
+                    router.replace("/admin");
+                } else {
+                    router.replace("/");
+                }
             } else {
-                router.replace("/");
+                // If not approved (pending, rejected, suspended), don't redirect
+                // This allows the error message to be displayed
             }
         }
     }, [user, userProfile, loading, router]);
@@ -35,8 +41,8 @@ const SignInWrapper = () => {
         );
     }
 
-    // If user is authenticated, show loading while redirecting
-    if (user && userProfile) {
+    // If user is authenticated AND approved, show loading while redirecting
+    if (user && userProfile && userProfile.status === "approved") {
         return (
             <div className="flex items-center justify-center min-h-screen bg-(--primary-bg)">
                 <Spinner size="lg" color="gold" />
