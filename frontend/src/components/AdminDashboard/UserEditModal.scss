@@ -10,7 +10,9 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    padding: 20px;
+    padding: 24px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
 }
 
 .modal-container {
@@ -19,8 +21,11 @@
     border-radius: 16px;
     width: 100%;
     max-width: 500px;
+    max-height: 90vh;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
     animation: modal-spin 0.3s ease-out;
 }
 
@@ -66,6 +71,28 @@
 
 .modal-form {
     padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+    overscroll-behavior: contain;
+
+    // Custom scrollbar for better appearance
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--border-color);
+        border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: var(--text-muted);
+    }
 
     .error-banner {
         background: rgba(231, 76, 60, 0.1);
@@ -102,6 +129,12 @@
 
             &:focus {
                 border-color: var(--accent-color-2);
+            }
+
+            &:disabled {
+                cursor: not-allowed;
+                opacity: 0.7;
+                background: rgba(255, 255, 255, 0.02);
             }
         }
     }

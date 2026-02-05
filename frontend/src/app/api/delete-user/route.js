@@ -19,10 +19,10 @@ export async function POST(request) {
             return NextResponse.json({ error: "You cannot delete your own account" }, { status: 403 });
         }
 
-        // Verify the requesting user is an admin
+        // Verify the requesting user is a superadmin
         const adminDoc = await adminDb.collection("users").doc(adminUid).get();
-        if (!adminDoc.exists || adminDoc.data().role !== "admin") {
-            return NextResponse.json({ error: "Unauthorized: Admin access required" }, { status: 403 });
+        if (!adminDoc.exists || adminDoc.data().role !== "superadmin") {
+            return NextResponse.json({ error: "Unauthorized: Superadmin access required" }, { status: 403 });
         }
 
         // Delete from Firestore first

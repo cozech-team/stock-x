@@ -19,6 +19,7 @@ const UserManagementTable = ({
     currentPage,
     totalPages,
     onPageChange,
+    isSuperAdmin,
 }) => {
     if (users.length === 0) {
         return (
@@ -54,11 +55,12 @@ const UserManagementTable = ({
     };
 
     const handleApproveClick = (user) => {
-        const isUserAdmin = user.role === "admin";
-        const packageType = selectedPackages[user.uid || user.id];
+        const isUserAdmin = user.role === "admin" || user.role === "superadmin";
+        const packageType = selectedPackages[user.uid || user.id] || user.package;
+        const isReactivating = user.status === "suspended";
 
         if (!isUserAdmin && !packageType) {
-            alert("Please select a package before approving.");
+            alert(`Please select a package before ${isReactivating ? "re-activating" : "approving"}.`);
             return;
         }
 
@@ -92,25 +94,36 @@ const UserManagementTable = ({
                                 </div>
                                 <div className="user-name-wrapper">
                                     <span>{user.displayName || "Anonymous"}</span>
-                                    {user.role === "admin" && <span className="badge admin-badge">Admin</span>}
+                                    {(user.role === "admin" || user.role === "superadmin") && (
+                                        <span className="badge admin-badge">
+                                            {user.role === "superadmin" ? "Superadmin" : "Admin"}
+                                        </span>
+                                    )}
                                 </div>
                             </td>
                             <td>{user.email}</td>
                             <td>
-                                {user.role !== "admin" ? (
-                                    user.status === "pending" ? (
-                                        <select
-                                            className="package-select"
-                                            value={selectedPackages[user.uid || user.id] || ""}
-                                            onChange={(e) => handlePackageChange(user.uid || user.id, e.target.value)}
-                                        >
-                                            <option value="">Select Package</option>
-                                            {PACKAGE_OPTIONS.map((pkg) => (
-                                                <option key={pkg.value} value={pkg.value}>
-                                                    {pkg.label}
-                                                </option>
-                                            ))}
-                                        </select>
+                                {user.role !== "admin" && user.role !== "superadmin" ? (
+                                    user.status === "pending" || user.status === "suspended" ? (
+                                        <div className="package-edit-cell">
+                                            <select
+                                                className="package-select"
+                                                value={selectedPackages[user.uid || user.id] || user.package || ""}
+                                                onChange={(e) => handlePackageChange(user.uid || user.id, e.target.value)}
+                                            >
+                                                {!user.package && <option value="">Select Package</option>}
+                                                {PACKAGE_OPTIONS.map((pkg) => (
+                                                    <option key={pkg.value} value={pkg.value}>
+                                                        {pkg.label}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            {user.status === "suspended" && user.package && (
+                                                <div className="current-pkg-note">
+                                                    Current: {getPackageLabel(user.package)}
+                                                </div>
+                                            )}
+                                        </div>
                                     ) : (
                                         <div className="package-info-display">
                                             <span className="badge package-badge">
@@ -174,13 +187,15 @@ const UserManagementTable = ({
                                     <button className="btn edit" onClick={() => onEdit(user)} title="Edit User">
                                         Edit
                                     </button>
-                                    <button
-                                        className="btn delete"
-                                        onClick={() => onDelete(user)}
-                                        title="Delete User Permanently"
-                                    >
-                                        Delete
-                                    </button>
+                                    {isSuperAdmin && (
+                                        <button
+                                            className="btn delete"
+                                            onClick={() => onDelete(user)}
+                                            title="Delete User Permanently"
+                                        >
+                                            Delete
+                                        </button>
+                                    )}
                                 </div>
                             </td>
                         </tr>

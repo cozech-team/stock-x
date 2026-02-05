@@ -20,7 +20,7 @@ const USERS_COLLECTION = "users";
  * If expired, updates status to suspended
  */
 export const checkAndHandlePackageExpiry = async (user) => {
-    if (!user || user.role === "admin" || user.status !== "approved") {
+    if (!user || user.role === "admin" || user.role === "superadmin" || user.status !== "approved") {
         return { expired: false };
     }
 
@@ -280,11 +280,27 @@ export const isAdmin = async (uid) => {
     try {
         const result = await getUserProfile(uid);
         if (result.success) {
-            return result.data.role === "admin";
+            return result.data.role === "admin" || result.data.role === "superadmin";
         }
         return false;
     } catch (error) {
         console.error("Error checking admin status:", error);
+        return false;
+    }
+};
+
+/**
+ * Check if user is superadmin
+ */
+export const isSuperAdmin = async (uid) => {
+    try {
+        const result = await getUserProfile(uid);
+        if (result.success) {
+            return result.data.role === "superadmin";
+        }
+        return false;
+    } catch (error) {
+        console.error("Error checking superadmin status:", error);
         return false;
     }
 };

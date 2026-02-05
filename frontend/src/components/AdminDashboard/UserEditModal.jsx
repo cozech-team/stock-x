@@ -5,7 +5,7 @@ import Spinner from "../Spinner/Spinner";
 import { PACKAGE_OPTIONS } from "../../constants/packages";
 import "./UserEditModal.scss";
 
-const UserEditModal = ({ user, isOpen, onClose, onSave }) => {
+const UserEditModal = ({ user, isOpen, onClose, onSave, isSuperAdmin }) => {
     const [formData, setFormData] = useState({
         displayName: "",
         email: "",
@@ -29,6 +29,17 @@ const UserEditModal = ({ user, isOpen, onClose, onSave }) => {
             });
         }
     }, [user]);
+
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "unset";
+        }
+        return () => {
+            document.body.style.overflow = "unset";
+        };
+    }, [isOpen]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -57,7 +68,7 @@ const UserEditModal = ({ user, isOpen, onClose, onSave }) => {
 
     return (
         <div className="modal-overlay">
-            <div className="modal-container">
+            <div className="modal-container" onWheel={(e) => e.stopPropagation()}>
                 <div className="modal-header">
                     <h2>Edit User</h2>
                     <button className="close-btn" onClick={onClose}>
@@ -91,9 +102,13 @@ const UserEditModal = ({ user, isOpen, onClose, onSave }) => {
                     <div className="form-row">
                         <div className="form-group">
                             <label>Role</label>
-                            <select name="role" value={formData.role} onChange={handleInputChange}>
+                            <select name="role" value={formData.role} onChange={handleInputChange} disabled={!isSuperAdmin}>
                                 <option value="user">User</option>
                                 <option value="admin">Admin</option>
+                                {isSuperAdmin && <option value="superadmin">Superadmin</option>}
+                                {!isSuperAdmin && formData.role === "superadmin" && (
+                                    <option value="superadmin">Superadmin</option>
+                                )}
                             </select>
                         </div>
 
@@ -108,11 +123,10 @@ const UserEditModal = ({ user, isOpen, onClose, onSave }) => {
                         </div>
                     </div>
 
-                    {formData.role !== "admin" && (
+                    {formData.role === "user" && (
                         <div className="form-group">
                             <label>Subscription Package</label>
                             <select name="package" value={formData.package} onChange={handleInputChange}>
-                                <option value="">No Package / Custom</option>
                                 {PACKAGE_OPTIONS.map((pkg) => (
                                     <option key={pkg.value} value={pkg.value}>
                                         {pkg.label}

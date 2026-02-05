@@ -20,7 +20,7 @@ const SignInWrapper = () => {
         if (!loading && user && userProfile) {
             // Check if user is approved
             if (userProfile.status === "approved") {
-                if (userProfile.role === "admin") {
+                if (userProfile.role === "admin" || userProfile.role === "superadmin") {
                     router.replace("/admin");
                 } else {
                     router.replace("/");

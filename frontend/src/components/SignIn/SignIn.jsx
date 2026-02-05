@@ -60,7 +60,7 @@ const SignIn = () => {
 
             if (result.success) {
                 // Redirect based on role (use replace to prevent back navigation)
-                if (result.profile?.role === "admin") {
+                if (result.profile?.role === "admin" || result.profile?.role === "superadmin") {
                     router.replace("/admin");
                 } else {
                     router.replace("/");
@@ -88,7 +88,7 @@ const SignIn = () => {
             const result = await signInWithGoogle();
 
             if (result.success) {
-                if (result.profile?.role === "admin") {
+                if (result.profile?.role === "admin" || result.profile?.role === "superadmin") {
                     router.replace("/admin");
                 } else {
                     router.replace("/");
@@ -116,7 +116,7 @@ const SignIn = () => {
             const result = await signInWithApple();
 
             if (result.success) {
-                if (result.profile?.role === "admin") {
+                if (result.profile?.role === "admin" || result.profile?.role === "superadmin") {
                     router.replace("/admin");
                 } else {
                     router.replace("/");

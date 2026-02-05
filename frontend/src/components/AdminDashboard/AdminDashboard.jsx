@@ -21,7 +21,7 @@ import { calculatePackageEndDate } from "../../constants/packages";
 import "./AdminDashboard.scss";
 
 const AdminDashboard = () => {
-    const { user } = useAuth();
+    const { user, userProfile } = useAuth();
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -83,7 +83,7 @@ const AdminDashboard = () => {
             const updatedUsers = await Promise.all(
                 users.map(async (u) => {
                     // Only check approved users who have a package
-                    if (u.status === "approved" && u.package && u.role !== "admin") {
+                    if (u.status === "approved" && u.package && u.role !== "admin" && u.role !== "superadmin") {
                         const expiry = await checkAndHandlePackageExpiry(u);
                         if (expiry.expired) {
                             updatedAny = true;
@@ -198,12 +198,13 @@ const AdminDashboard = () => {
         approved: users.filter((u) => u.status === "approved").length,
         suspended: users.filter((u) => u.status === "suspended").length,
         admin: users.filter((u) => u.role === "admin").length,
+        superadmin: users.filter((u) => u.role === "superadmin").length,
     };
 
     const filteredUsers = users.filter((u) => {
         // Handle role-based filtering (admin)
         if (filterStatus === "admin") {
-            const matchesRole = u.role === "admin";
+            const matchesRole = u.role === "admin" || u.role === "superadmin";
             const matchesSearch =
                 u.displayName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 u.email?.toLowerCase().includes(searchTerm.toLowerCase());
@@ -296,7 +297,7 @@ const AdminDashboard = () => {
                             <option value="approved">Approved</option>
                             <option value="rejected">Rejected</option>
                             <option value="suspended">Suspended</option>
-                            <option value="admin">Admin</option>
+                            <option value="admin">Admin / Superadmin</option>
                         </select>
                     </div>
                     <button
@@ -321,6 +322,7 @@ const AdminDashboard = () => {
                         currentPage={currentPage}
                         totalPages={totalPages}
                         onPageChange={setCurrentPage}
+                        isSuperAdmin={userProfile?.role === "superadmin"}
                     />
                 </div>
 
@@ -329,6 +331,7 @@ const AdminDashboard = () => {
                     isOpen={isEditModalOpen}
                     onClose={() => setIsEditModalOpen(false)}
                     onSave={handleSaveUser}
+                    isSuperAdmin={userProfile?.role === "superadmin"}
                 />
             </div>
         </div>

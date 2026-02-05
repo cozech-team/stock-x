@@ -400,6 +400,19 @@
         }
     }
 
+    .package-edit-cell {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        .current-pkg-note {
+            font-size: 11px;
+            color: var(--text-muted);
+            opacity: 0.8;
+            font-style: italic;
+        }
+    }
+
     .package-badge {
         background: rgba(52, 152, 219, 0.15);
         color: #3498db;
