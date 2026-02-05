@@ -17,7 +17,7 @@ import Spinner from "../Spinner/Spinner";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import { signOut } from "../../services/authService";
 import { useRouter } from "next/navigation";
-import { calculatePackageEndDate } from "../../constants/packages";
+import { calculatePackageEndDate, isPackageExpired } from "../../constants/packages";
 import "./AdminDashboard.scss";
 
 const AdminDashboard = () => {
@@ -108,8 +108,11 @@ const AdminDashboard = () => {
     }, [filterStatus, searchTerm]);
 
     const handleApprove = async (uid, packageData) => {
-        // Validate package selection
-        if (!packageData || !packageData.type) {
+        // Validate package selection for regular users
+        const targetUser = users.find((u) => u.uid === uid || u.id === uid);
+        const isTargetAdmin = targetUser?.role === "admin" || targetUser?.role === "superadmin";
+
+        if (!isTargetAdmin && (!packageData || !packageData.type)) {
             alert("Please select a package before approving the user.");
             return;
         }
@@ -161,17 +164,20 @@ const AdminDashboard = () => {
     };
 
     const handleSaveUser = async (uid, updatedData) => {
-        // If package changed, recalculate dates
-        if (updatedData.package && updatedData.package !== selectedUser.package) {
-            const now = new Date();
-            const endDate = calculatePackageEndDate(now, updatedData.package);
+        // If package is selected, check if we need to set/refresh the subscription
+        if (updatedData.package) {
+            const isNewPackage = updatedData.package !== selectedUser.package;
+            const isBecomingApproved = updatedData.status === "approved" && selectedUser.status !== "approved";
+            const isExpired = isPackageExpired(selectedUser.packageEndDate);
 
-            updatedData.packageStartDate = now;
-            updatedData.packageEndDate = endDate;
-            updatedData.packageStatus = "active";
+            if (isNewPackage || isBecomingApproved || isExpired) {
+                const now = new Date();
+                const endDate = calculatePackageEndDate(now, updatedData.package);
 
-            // If user was suspended, changing package should ideally reactivate them if status is approved
-            // But we keep the status as chosen in the modal
+                updatedData.packageStartDate = now;
+                updatedData.packageEndDate = endDate;
+                updatedData.packageStatus = "active";
+            }
         }
 
         const result = await updateFirestoreUser(uid, updatedData);

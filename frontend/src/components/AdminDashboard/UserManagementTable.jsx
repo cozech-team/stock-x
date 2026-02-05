@@ -55,20 +55,30 @@ const UserManagementTable = ({
     };
 
     const handleApproveClick = (user) => {
+        const userId = user.uid || user.id;
         const isUserAdmin = user.role === "admin" || user.role === "superadmin";
-        const packageType = selectedPackages[user.uid || user.id] || user.package;
-        const isReactivating = user.status === "suspended";
+
+        // Check if we have a package selection (either from state or existing)
+        const selectedPkgValue = selectedPackages[userId];
+        const existingPkgValue = user.package;
+        const packageType = selectedPkgValue || existingPkgValue;
+
+        const isSuspended = user.status === "suspended";
 
         if (!isUserAdmin && !packageType) {
-            alert(`Please select a package before ${isReactivating ? "re-activating" : "approving"}.`);
+            alert(`Please select a subscription package before ${isSuspended ? "re-activating" : "approving"} this user.`);
             return;
         }
 
         if (isUserAdmin) {
-            onApprove(user.uid || user.id, null);
+            onApprove(userId, null);
         } else {
             const packageData = PACKAGE_OPTIONS.find((p) => p.value === packageType);
-            onApprove(user.uid || user.id, { type: packageData.value, days: packageData.days });
+            if (!packageData) {
+                alert("Invalid package type chosen. Please select a valid package.");
+                return;
+            }
+            onApprove(userId, { type: packageData.value, days: packageData.days });
         }
     };
 
@@ -118,11 +128,13 @@ const UserManagementTable = ({
                                                     </option>
                                                 ))}
                                             </select>
-                                            {user.status === "suspended" && user.package && (
-                                                <div className="current-pkg-note">
-                                                    Current: {getPackageLabel(user.package)}
-                                                </div>
-                                            )}
+                                            {(user.status === "suspended" || isPackageExpired(user.packageEndDate)) &&
+                                                user.package && (
+                                                    <div className="current-pkg-note">
+                                                        Current: {getPackageLabel(user.package)}{" "}
+                                                        {isPackageExpired(user.packageEndDate) ? "(Expired)" : ""}
+                                                    </div>
+                                                )}
                                         </div>
                                     ) : (
                                         <div className="package-info-display">
