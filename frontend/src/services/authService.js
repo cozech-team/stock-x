@@ -48,10 +48,13 @@ export const checkUserApprovalStatus = async (uid) => {
             message: "Your account has been rejected. Please contact support.",
         };
     } else if (status === "suspended") {
+        const isExpired = result.data.packageStatus === "expired";
         return {
             approved: false,
             status: "suspended",
-            message: "Your account has been suspended. Please contact support.",
+            message: isExpired
+                ? "Your subscription package has expired. Please contact support for renewal."
+                : "Your account has been suspended. Please contact support.",
         };
     }
 
